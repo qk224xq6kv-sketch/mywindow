@@ -41,7 +41,7 @@
     <!-- Hero Section -->
     <section id="top" class="hero-section">
         <div class="hero-background">
-            <img src="https://via.placeholder.com/1200x400?text=Cleaning+Services" alt="Cleaning Services">
+            <img src="window-cleaning.jpg" alt="Professional Window Cleaning Service">
             <div class="hero-overlay">
                 <h2 data-de="VOLLSTÄNDIG VERSICHERT UND GEBUNDEN" data-en="FULLY INSURED AND BONDED">FULLY INSURED AND
                     BONDED</h2>
@@ -142,7 +142,14 @@
 
     <!-- Contact Section -->
     <section id="contact" class="contact-section">
-        <h2 data-de="Kontakt & Fragen" data-en="Contact & Questions">Kontakt & Fragen</h2>
+        <div class="contact-header">
+            <p class="contact-label" data-de="KONTAKT" data-en="CONTACT">KONTAKT</p>
+            <h2 data-de="Sprechen Sie mit uns" data-en="Talk to us">Sprechen Sie mit uns</h2>
+            <p class="contact-description"
+                data-de="Sie haben Fragen oder wünschen ein Angebot? Wir freuen uns auf Ihre Nachricht."
+                data-en="Do you have questions or want an offer? We look forward to your message.">Sie haben Fragen oder
+                wünschen ein Angebot? Wir freuen uns auf Ihre Nachricht.</p>
+        </div>
         <div class="contact-wrapper">
             <div class="contact-info">
                 <div class="info-card">
@@ -159,25 +166,37 @@
                             data-en="Start WhatsApp chat">WhatsApp-Chat starten</a></p>
                 </div>
             </div>
-            <form id="contactForm" class="contact-form">
+            <form id="contactForm" class="contact-form" action="https://formspree.io/f/xlgjknnj" method="POST">
                 <h3 data-de="Nachricht senden" data-en="Send Message">Nachricht senden</h3>
-                <input type="text" placeholder="Ihr Name" data-de-placeholder="Ihr Name" data-en-placeholder="Your Name"
-                    required>
-                <input type="email" placeholder="Ihre E-Mail" data-de-placeholder="Ihre E-Mail"
+                <input type="text" name="name" placeholder="Ihr Name" data-de-placeholder="Ihr Name"
+                    data-en-placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Ihre E-Mail" data-de-placeholder="Ihre E-Mail"
                     data-en-placeholder="Your Email" required>
-                <textarea placeholder="Ihre Nachricht oder Frage" data-de-placeholder="Ihre Nachricht oder Frage"
-                    data-en-placeholder="Your message or question" required></textarea>
+                <textarea name="message" placeholder="Ihre Nachricht oder Frage"
+                    data-de-placeholder="Ihre Nachricht oder Frage" data-en-placeholder="Your message or question"
+                    required></textarea>
+                <input type="hidden" name="_next" value="https://yourdomain.com/success.html">
+                <input type="hidden" name="_captcha" value="false">
                 <button type="submit" data-de="Nachricht senden" data-en="Send Message">Nachricht senden</button>
             </form>
         </div>
     </section>
 
-    <footer>
-        <p data-de="© 2024 Your Window. Alle Rechte vorbehalten." data-en="© 2024 Your Window. All rights reserved.">©
-            2024 Your Window. Alle Rechte vorbehalten.</p>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <small data-de="© <span id=&quot;year&quot;></span> Your Window. Alle Rechte vorbehalten." data-en="© <span id=&quot;year&quot;></span> Your Window. All rights reserved.">©
+                <span id="year"></span> Your Window. Alle Rechte vorbehalten.</small>
+            <nav class="footer-nav" aria-label="Footer">
+                <a href="/impressum.html" data-de="Impressum" data-en="Impressum">Impressum</a>
+                <a href="/datenschutz.html" data-de="Datenschutz" data-en="Privacy Policy">Datenschutz</a>
+            </nav>
+        </div>
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
 </body>
 
 </html>
