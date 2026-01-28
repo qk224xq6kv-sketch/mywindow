@@ -6,6 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>my Window - Professionelle Büroreinigung</title>
     <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // https://dashboard.emailjs.com/admin/account
+            emailjs.init({
+              publicKey: "EkjsjWA3ij3hA-Deg",
+            });
+        })();
+    </script>
+    <script type="text/javascript">
+        window.onload = function() {
+            document.getElementById('bookingForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                // these IDs from the previous steps
+                emailjs.sendForm('service_ec65ghp', 'template_170jtv3', this)
+                    .then(() => {
+                        console.log('SUCCESS!');
+                    }, (error) => {
+                        console.log('FAILED...', error);
+                    });
+            });
+        }
+    </script>
 </head>
 
 <body>
@@ -120,11 +143,11 @@
         <h2 data-de="Termin buchen" data-en="Book Appointment">Termin buchen</h2>
         <form id="bookingForm">
             <input type="text" placeholder="Ihr Name" data-de-placeholder="Ihr Name" data-en-placeholder="Your Name"
-                required>
-            <input type="email" placeholder="E-Mail" data-de-placeholder="E-Mail" data-en-placeholder="Email" required>
-            <input type="tel" placeholder="Telefon" data-de-placeholder="Telefon" data-en-placeholder="Phone" required>
-            <input type="date" required>
-            <select required>
+                required name="name">
+            <input type="email" placeholder="E-Mail" data-de-placeholder="E-Mail" data-en-placeholder="Email" required name="email">
+            <input type="tel" placeholder="Telefon" data-de-placeholder="Telefon" data-en-placeholder="Phone" required name="phone">
+            <input type="datetime-local" required name="date">
+            <select required name="service">
                 <option data-de="Service wählen" data-en="Select service">Service wählen</option>
                 <option data-de="Grundreinigung" data-en="Basic Cleaning">Grundreinigung</option>
                 <option data-de="Sonderreinigung" data-en="Special Cleaning">Sonderreinigung</option>
@@ -135,7 +158,7 @@
             </select>
             <textarea placeholder="Besonderheiten oder Anmerkungen"
                 data-de-placeholder="Besonderheiten oder Anmerkungen"
-                data-en-placeholder="Special notes or comments"></textarea>
+                data-en-placeholder="Special notes or comments" name="notes"></textarea>
             <button type="submit" data-de="Termin buchen" data-en="Book Appointment">Termin buchen</button>
         </form>
     </section>
