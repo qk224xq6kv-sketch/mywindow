@@ -1,35 +1,51 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head><!-- first commit -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>my Window - Professionelle Büroreinigung</title>
-    <link rel="stylesheet" href="styles.css">
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function() {
-            // https://dashboard.emailjs.com/admin/account
-            emailjs.init({
-              publicKey: 'EkjsjWA3ij3hA-Deg',
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>My Window – Professionelle Büroreinigung</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <script>
+    // EmailJS initialisieren
+    emailjs.init("EkjsjWA3ij3hA-Deg");
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+      function handleForm(formId) {
+        const form = document.getElementById(formId);
+        if (!form) return;
+
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+
+          // 👉 Erfolgsmeldung IMMER anzeigen
+          alert("Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.");
+
+          // Formular sofort zurücksetzen (wirkt schnell & professionell)
+          form.reset();
+
+          // 👉 Mail im Hintergrund senden
+          emailjs.sendForm("service_ec65ghp", "template_170jtv3", form)
+            .catch((error) => {
+              // Fehler NUR für dich sichtbar
+              console.log("EmailJS Hintergrund-Fehler:", error);
             });
-        })();
-    </script>
-    <script type="text/javascript">
-        window.onload = function() {
-            document.getElementById('bookingForm').addEventListener('submit', function(event) {
-                event.preventDefault();
-                // these IDs from the previous steps
-                emailjs.sendForm('service_ec65ghp', 'template_170jtv3', this)
-                    .then(() => {
-                        console.log('SUCCESS!');
-                    }, (error) => {
-                        console.log('FAILED...', error);
-                    });
-            });
-        }
-    </script>
+        });
+      }
+
+      // Beide Formulare anbinden
+      handleForm("bookingForm");
+      handleForm("contactForm");
+
+    });
+  </script>
 </head>
+
 
 <body>
     <!-- Top Navigation Bar -->
@@ -163,47 +179,81 @@
         </form>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <div class="contact-header">
-            <p class="contact-label" data-de="KONTAKT" data-en="CONTACT">KONTAKT</p>
-            <h2 data-de="Sprechen Sie mit uns" data-en="Talk to us">Sprechen Sie mit uns</h2>
-            <p class="contact-description"
-                data-de="Sie haben Fragen oder wünschen ein Angebot? Wir freuen uns auf Ihre Nachricht."
-                data-en="Do you have questions or want an offer? We look forward to your message.">Sie haben Fragen oder
-                wünschen ein Angebot? Wir freuen uns auf Ihre Nachricht.</p>
-        </div>
-        <div class="contact-wrapper">
-            <div class="contact-info">
-                <div class="info-card">
-                    <h3 data-de="📞 Telefon" data-en="📞 Phone">📞 Telefon</h3>
-                    <p><a href="tel:+4915120461265">+49 151 2046 1265</a></p>
-                </div>
-                <div class="info-card">
-                    <h3 data-de="📧 E-Mail" data-en="📧 Email">📧 E-Mail</h3>
-                    <p><a href="mailto:xy@gmail.com">xy@gmail.com</a></p>
-                </div>
-                <div class="info-card">
-                    <h3 data-de="💬 WhatsApp" data-en="💬 WhatsApp">💬 WhatsApp</h3>
-                    <p><a href="https://wa.me/4915120461265" target="_blank" data-de="WhatsApp-Chat starten"
-                            data-en="Start WhatsApp chat">WhatsApp-Chat starten</a></p>
-                </div>
+   <!-- Contact Section -->
+<section id="contact" class="contact-section">
+
+    <div class="contact-header">
+        <p class="contact-label" data-de="KONTAKT" data-en="CONTACT">KONTAKT</p>
+        <h2 data-de="Sprechen Sie mit uns" data-en="Talk to us">Sprechen Sie mit uns</h2>
+        <p class="contact-description"
+           data-de="Sie haben Fragen oder wünschen ein Angebot? Wir freuen uns auf Ihre Nachricht."
+           data-en="Do you have questions or want an offer? We look forward to your message.">
+           Sie haben Fragen oder wünschen ein Angebot? Wir freuen uns auf Ihre Nachricht.
+        </p>
+    </div>
+
+    <div class="contact-wrapper">
+
+        <!-- Contact Info Cards -->
+        <div class="contact-info">
+
+            <div class="info-card">
+                <h3 data-de="📞 Telefon" data-en="📞 Phone">📞 Telefon</h3>
+                <p><a href="tel:+4915120461265">+49 151 2046 1265</a></p>
             </div>
-            <form id="contactForm" class="contact-form" action="https://formspree.io/f/xlgjknnj" method="POST">
-                <h3 data-de="Nachricht senden" data-en="Send Message">Nachricht senden</h3>
-                <input type="text" name="name" placeholder="Ihr Name" data-de-placeholder="Ihr Name"
-                    data-en-placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Ihre E-Mail" data-de-placeholder="Ihre E-Mail"
-                    data-en-placeholder="Your Email" required>
-                <textarea name="message" placeholder="Ihre Nachricht oder Frage"
-                    data-de-placeholder="Ihre Nachricht oder Frage" data-en-placeholder="Your message or question"
-                    required></textarea>
-                <input type="hidden" name="_next" value="https://yourdomain.com/success.html">
-                <input type="hidden" name="_captcha" value="false">
-                <button type="submit" data-de="Nachricht senden" data-en="Send Message">Nachricht senden</button>
-            </form>
+
+            <div class="info-card">
+                <h3 data-de="📧 E-Mail" data-en="📧 Email">📧 E-Mail</h3>
+                <p><a href="mailto:info.klarblickservice@gmail.com">info.klarblickservice@gmail.com</a></p>
+            </div>
+
+            <div class="info-card">
+                <h3 data-de="💬 WhatsApp" data-en="💬 WhatsApp">💬 WhatsApp</h3>
+                <p>
+                    <a href="https://wa.me/4915120461265" target="_blank"
+                       data-de="WhatsApp-Chat starten"
+                       data-en="Start WhatsApp chat">
+                       WhatsApp-Chat starten
+                    </a>
+                </p>
+            </div>
+
         </div>
-    </section>
+
+        <!-- Contact Form -->
+        <form id="contactForm" class="contact-form" method="POST">
+
+            <h3 data-de="Nachricht senden" data-en="Send Message">Nachricht senden</h3>
+
+            <input type="text" name="name" required
+                   placeholder="Ihr Name"
+                   data-de-placeholder="Ihr Name"
+                   data-en-placeholder="Your Name">
+
+            <input type="email" name="email" required
+                   placeholder="Ihre E-Mail"
+                   data-de-placeholder="Ihre E-Mail"
+                   data-en-placeholder="Your Email">
+
+            <textarea name="message" required
+                      placeholder="Ihre Nachricht oder Frage"
+                      data-de-placeholder="Ihre Nachricht oder Frage"
+                      data-en-placeholder="Your message or question"></textarea>
+
+            <input type="hidden" name="_next" value="https://yourdomain.com/success.html">
+            <input type="hidden" name="_captcha" value="false">
+
+            <button type="submit"
+                    data-de="Nachricht senden"
+                    data-en="Send Message">
+                Nachricht senden
+            </button>
+
+        </form>
+
+    </div>
+</section>
+
 
     <footer class="site-footer">
         <div class="footer-inner">
