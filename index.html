@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>My Window – Professionelle Büroreinigung</title>
+  <title>my window – Professionelle Reinigung</title>
   <link rel="stylesheet" href="styles.css" />
 
   <!-- EmailJS -->
@@ -16,261 +16,296 @@
 
     document.addEventListener("DOMContentLoaded", () => {
 
-      function handleForm(formId) {
+      // Kleine, saubere Bestätigung (statt alert)
+      function showToast(text) {
+        const el = document.getElementById("toast");
+        if (!el) return;
+        el.textContent = text;
+        el.classList.add("show");
+        setTimeout(() => el.classList.remove("show"), 2500);
+      }
+
+      // Formular-Handler: ✅ erst senden, dann resetten (sonst kommen leere Inhalte an)
+      function handleForm(formId, serviceId, templateId) {
         const form = document.getElementById(formId);
         if (!form) return;
 
         form.addEventListener("submit", (event) => {
           event.preventDefault();
 
-          // 👉 Erfolgsmeldung IMMER anzeigen
-          alert("Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.");
+          // Kunde sieht immer Erfolg (keine Fehlertexte)
+          showToast("Vielen Dank! Wir haben Ihre Anfrage erhalten.");
 
-          // Formular sofort zurücksetzen (wirkt schnell & professionell)
-          form.reset();
-
-          // 👉 Mail im Hintergrund senden
-          emailjs.sendForm("service_ec65ghp", "template_170jtv3", form)
+          // Senden im Hintergrund
+          emailjs.sendForm(serviceId, templateId, form)
+            .then(() => {
+              form.reset();
+            })
             .catch((error) => {
-              // Fehler NUR für dich sichtbar
+              // Fehler nur für dich sichtbar
               console.log("EmailJS Hintergrund-Fehler:", error);
+              form.reset();
             });
         });
       }
 
-      // Beide Formulare anbinden
-      handleForm("Booking Section");
-      handleForm("contactForm");
+      // Booking → dein bisheriges Setup
+      handleForm("bookingForm", "service_ec65ghp", "template_170jtv3");
 
+      // Contact → deine neuen Angaben
+      handleForm("contactForm", "service_4j7i3fp", "template_24ws2c9");
+
+      // Footer Jahr
+      const yearEl = document.getElementById("year");
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
     });
   </script>
 </head>
 
-
 <body>
-    <!-- Top Navigation Bar -->
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- Top Navigation Bar -->
+  <header class="site-header">
     <nav class="top-nav">
-        <div class="nav-container">
-            <div class="language-switcher">
-                <select id="languageSelect" class="language-select">
-                    <option value="de">🇩🇪 Deutsch</option>
-                    <option value="en">🇬🇧 English</option>
-                </select>
-            </div>
-            <div class="logo-section">
-                <div class="logo">my Window</div>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="#top" data-de="HOME" data-en="HOME">HOME</a></li>
-                <li><a href="#about" data-de="ABOUT" data-en="ABOUT">ABOUT</a></li>
-                <li><a href="#services" data-de="SERVICES" data-en="SERVICES">SERVICES</a></li>
-                <li><a href="#contact" data-de="CONTACT" data-en="CONTACT">Kontakt</a></li>
-            </ul>
-            <div class="social-icons">
-                <a href="https://wa.me/4915120461265" class="social-icon whatsapp" target="_blank"
-                    title="WhatsApp">💬</a>
-                <a href="https://www.instagram.com/klarblickberlin/" class="social-icon instagram" target="_blank"
-                    title="Instagram">📷</a>
-                <a href="https://www.tiktok.com/@klarblick.berlin" class="social-icon tiktok" target="_blank"
-                    title="TikTok">♪</a>
-            </div>
-        </div>
+      <div class="nav-container">
+        <a class="logo" href="#top">my window</a>
+
+        <ul class="nav-menu">
+          <li><a href="#top">Start</a></li>
+          <li><a href="#about">Über uns</a></li>
+          <li><a href="#services">Leistungen</a></li>
+          <li><a href="#pricing">Preise</a></li>
+          <li><a href="#contact">Kontakt</a></li>
+        </ul>
+
+        <!-- Statt Sprache: Termin buchen -->
+        <a class="btn btn-primary" href="#booking">Termin buchen</a>
+      </div>
     </nav>
+  </header>
 
-    <!-- Hero Section -->
-    <section id="top" class="hero-section">
-        <div class="hero-background">
-            <img src="window-cleaning.jpg" alt="Professional Window Cleaning Service">
-            <div class="hero-overlay">
-                <h2 data-de="VOLLSTÄNDIG VERSICHERT UND GEBUNDEN" data-en="FULLY INSURED AND BONDED">FULLY INSURED AND
-                    BONDED</h2>
-            </div>
+  <!-- Hero Section -->
+  <section id="top" class="hero-section">
+    <div class="hero-background">
+      <img src="window-cleaning.jpg" alt="Fenster- und Gebäudereinigung" />
+      <div class="hero-overlay">
+        <p class="hero-badge">VOLLSTÄNDIG VERSICHERT</p>
+        <h1>Professionelle Reinigung für Privat & Gewerbe</h1>
+        <p class="hero-text">Sauber · Zuverlässig · Streifenfrei</p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#booking">Termin buchen</a>
+          <a class="btn btn-ghost" href="#services">Leistungen ansehen</a>
         </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about-section">
-        <h2 data-de="Warum Wir" data-en="Why Us">Why Us</h2>
-        <p data-de="Wir bieten professionelle Reinigungsdienstleistungen für Ihre Büros und Kanzleien."
-            data-en="We offer professional cleaning services for your offices and law firms.">Wir bieten professionelle
-            Reinigungsdienstleistungen für Ihre Büros und Kanzleien.</p>
-        <p data-de="Zuverlässig, gründlich und diskret - seit Jahren Ihr vertrauensvoller Partner."
-            data-en="Reliable, thorough and discreet - your trusted partner for years.">Zuverlässig, gründlich und
-            diskret - seit Jahren Ihr vertrauensvoller Partner.</p>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="services-section">
-        <h2 data-de="Unsere Services" data-en="Our Services">Our Services</h2>
-        <div class="services-grid">
-            <div class="service-card">
-                <h3 data-de="Wohnungsreinigung" data-en="Residential Cleaning">Residential Cleaning</h3>
-                <p data-de="Professionelle Fensterreinigung für Ihr Zuhause. Kristallklare Fenster für eine bessere Sicht."
-                    data-en="Professional window cleaning for your home. Crystal clear windows for better visibility.">
-                    Professionelle Fensterreinigung für Ihr Zuhause. Kristallklare Fenster für eine bessere Sicht.</p>
-            </div>
-            <div class="service-card">
-                <h3 data-de="Gewerbliche Reinigung" data-en="Commercial Cleaning">Commercial Cleaning</h3>
-                <p data-de="Gewerbliche Reinigungslösungen für Büros, Kanzleien und Geschäftsgebäude."
-                    data-en="Commercial cleaning solutions for offices, law firms and commercial buildings.">Gewerbliche
-                    Reinigungslösungen für Büros, Kanzleien und Geschäftsgebäude.</p>
-            </div>
-            <div class="service-card">
-                <h3 data-de="Fensterreinigung" data-en="Window Cleaning">Window Cleaning</h3>
-                <p data-de="Kristallklare Fenster für eine bessere Sicht und Reinheit."
-                    data-en="Crystal clear windows for better visibility and cleanliness.">Kristallklare Fenster für
-                    eine bessere Sicht und Reinheit.</p>
-            </div>
-            <div class="service-card">
-                <h3 data-de="Tiefenreinigung" data-en="Deep Cleaning">Deep Cleaning</h3>
-                <p data-de="Intensive Tiefenreinigung für optimale Hygiene und Sauberkeit."
-                    data-en="Intensive deep cleaning for optimal hygiene and cleanliness.">Intensive Tiefenreinigung für
-                    optimale Hygiene und Sauberkeit.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section id="pricing" class="pricing-section">
-        <h2 data-de="Preise" data-en="Pricing">Pricing</h2>
-        <div class="pricing-grid">
-            <div class="price-card">
-                <h3 data-de="Standard" data-en="Standard">Standard</h3>
-                <p class="price">€49</p>
-                <p data-de="Fensterreinigung bis 10 m²" data-en="Window cleaning up to 10 m²">Fensterreinigung bis 10 m²
-                </p>
-            </div>
-            <div class="price-card">
-                <h3 data-de="Premium" data-en="Premium">Premium</h3>
-                <p class="price">€99</p>
-                <p data-de="Fensterreinigung bis 25 m²" data-en="Window cleaning up to 25 m²">Fensterreinigung bis 25 m²
-                </p>
-            </div>
-            <div class="price-card">
-                <h3 data-de="Professionell" data-en="Professional">Professional</h3>
-                <p class="price">€199</p>
-                <p data-de="Gewerbliche Reinigung" data-en="Commercial cleaning">Gewerbliche Reinigung</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Booking Section -->
-    <section id="booking" class="booking-section">
-        <h2 data-de="Termin buchen" data-en="Book Appointment">Termin buchen</h2>
-        <form id="bookingForm">
-            <input type="text" placeholder="Ihr Name" data-de-placeholder="Ihr Name" data-en-placeholder="Your Name"
-                required name="name">
-            <input type="email" placeholder="E-Mail" data-de-placeholder="E-Mail" data-en-placeholder="Email" required name="email">
-            <input type="tel" placeholder="Telefon" data-de-placeholder="Telefon" data-en-placeholder="Phone" required name="phone">
-            <input type="datetime-local" required name="date">
-            <select required name="service">
-                <option data-de="Service wählen" data-en="Select service">Service wählen</option>
-                <option data-de="Grundreinigung" data-en="Basic Cleaning">Grundreinigung</option>
-                <option data-de="Sonderreinigung" data-en="Special Cleaning">Sonderreinigung</option>
-                <option data-de="Rahmen und Falzreinigung" data-en="Frame and Seal Cleaning">Rahmen und Falzreinigung
-                </option>
-                <option data-de="Fensterreinigung Gewerbe/Büro" data-en="Commercial/Office Window Cleaning">
-                    Fensterreinigung Gewerbe/Büro</option>
-            </select>
-            <textarea placeholder="Besonderheiten oder Anmerkungen"
-                data-de-placeholder="Besonderheiten oder Anmerkungen"
-                data-en-placeholder="Special notes or comments" name="notes"></textarea>
-            <button type="submit" data-de="Termin buchen" data-en="Book Appointment">Termin buchen</button>
-        </form>
-    </section>
-
-   <!-- Contact Section -->
-<section id="contact" class="contact-section">
-
-    <div class="contact-header">
-        <p class="contact-label" data-de="KONTAKT" data-en="CONTACT">KONTAKT</p>
-        <h2 data-de="Sprechen Sie mit uns" data-en="Talk to us">Sprechen Sie mit uns</h2>
-        <p class="contact-description"
-           data-de="Sie haben Fragen oder wünschen ein Angebot? Wir freuen uns auf Ihre Nachricht."
-           data-en="Do you have questions or want an offer? We look forward to your message.">
-           Sie haben Fragen oder wünschen ein Angebot? Wir freuen uns auf Ihre Nachricht.
-        </p>
+      </div>
     </div>
+  </section>
 
-    <div class="contact-wrapper">
+  <!-- About Section -->
+  <section id="about" class="about-section section">
+    <div class="container">
+      <h2>Warum wir</h2>
+      <p>Wir bieten professionelle Reinigungsdienstleistungen für Büros, Kanzleien und Privatobjekte.</p>
+      <p>Zuverlässig, gründlich und diskret – Ihr Partner für Sauberkeit.</p>
+    </div>
+  </section>
 
-        <!-- Contact Info Cards -->
+  <!-- Services Section -->
+  <section id="services" class="services-section section">
+    <div class="container">
+      <h2>Unsere Leistungen</h2>
+
+      <div class="services-grid">
+        <div class="card service-card">
+          <h3>Grundreinigung</h3>
+          <p>Gründliche Reinigung von Böden, Flächen, Sanitär und Details – ideal als Basis.</p>
+        </div>
+
+        <div class="card service-card">
+          <h3>Sonderreinigung</h3>
+          <p>Nach Umzug, Renovierung oder besonderen Anforderungen – extra gründlich.</p>
+        </div>
+
+        <div class="card service-card">
+          <h3>Gewerbliche Reinigung</h3>
+          <p>Büros, Kanzleien, Praxen – zuverlässig, diskret und auch regelmäßig.</p>
+        </div>
+      </div>
+
+      <!-- Platz für Bilder unter "Unsere Leistungen" -->
+      <div class="services-media">
+        <h3 class="subhead">Einblicke in unsere Arbeit</h3>
+
+        <!-- Swipe/Scroll Galerie (2–3 Bilder) -->
+        <div class="gallery" aria-label="Arbeitsbeispiele">
+          <!-- Ersetze die src später mit deinen echten Bildern -->
+          <figure class="gallery-item">
+            <img src="bilder/leistung-1.jpg" alt="Arbeitsbeispiel 1" loading="lazy">
+            <figcaption>Beispiel 1</figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <img src="bilder/leistung-2.jpg" alt="Arbeitsbeispiel 2" loading="lazy">
+            <figcaption>Beispiel 2</figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <img src="bilder/leistung-3.jpg" alt="Arbeitsbeispiel 3" loading="lazy">
+            <figcaption>Beispiel 3</figcaption>
+          </figure>
+        </div>
+
+        <p class="hint">⬅️ Wischen/Scrollen für weitere Bilder</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="pricing" class="pricing-section section section-alt">
+    <div class="container">
+      <h2>Preise (pro m²)</h2>
+
+      <div class="pricing-grid">
+        <div class="card price-card">
+          <h3>Grundreinigung</h3>
+          <p class="price">ab 3,00 € / m²</p>
+          <p class="muted small">Je nach Zustand und Aufwand.</p>
+        </div>
+
+        <div class="card price-card">
+          <h3>Sonderreinigung</h3>
+          <p class="price">ab 4,50 € / m²</p>
+          <p class="muted small">Individuell nach Objekt.</p>
+        </div>
+
+        <div class="card price-card">
+          <h3>Gewerbliche Reinigung</h3>
+          <p class="price">Angebot nach Absprache</p>
+          <p class="muted small">Regelmäßig oder einmalig.</p>
+        </div>
+      </div>
+
+      <p class="muted small" style="margin-top:10px;">
+        * Endpreis abhängig von Fläche, Verschmutzung und Zusatzleistungen.
+      </p>
+    </div>
+  </section>
+
+  <!-- Vorher / Nachher -->
+  <section id="beforeafter" class="section">
+    <div class="container">
+      <h2>Vorher / Nachher</h2>
+
+      <div class="gallery beforeafter" aria-label="Vorher Nachher Galerie">
+        <!-- Ersetze später die Bilder -->
+        <figure class="gallery-item">
+          <img src="bilder/vorher-1.jpg" alt="Vorher 1" loading="lazy">
+          <figcaption>Vorher</figcaption>
+        </figure>
+
+        <figure class="gallery-item">
+          <img src="bilder/nachher-1.jpg" alt="Nachher 1" loading="lazy">
+          <figcaption>Nachher</figcaption>
+        </figure>
+
+        <figure class="gallery-item">
+          <img src="bilder/vorher-2.jpg" alt="Vorher 2" loading="lazy">
+          <figcaption>Vorher</figcaption>
+        </figure>
+
+        <figure class="gallery-item">
+          <img src="bilder/nachher-2.jpg" alt="Nachher 2" loading="lazy">
+          <figcaption>Nachher</figcaption>
+        </figure>
+      </div>
+
+      <p class="hint">⬅️ Wischen/Scrollen für weitere Beispiele</p>
+    </div>
+  </section>
+
+  <!-- Booking Section -->
+  <section id="booking" class="booking-section section">
+    <div class="container">
+      <h2>Termin buchen</h2>
+
+      <form id="bookingForm" class="form">
+        <input type="text" placeholder="Ihr Name" required name="name">
+        <input type="email" placeholder="E-Mail" required name="email">
+        <input type="tel" placeholder="Telefon" required name="phone">
+        <input type="datetime-local" required name="date">
+
+        <select required name="service">
+          <option value="" selected disabled>Service wählen</option>
+          <option value="Grundreinigung">Grundreinigung</option>
+          <option value="Sonderreinigung">Sonderreinigung</option>
+          <option value="Gewerbliche Reinigung">Gewerbliche Reinigung</option>
+        </select>
+
+        <textarea placeholder="Besonderheiten oder Anmerkungen" name="notes" rows="4"></textarea>
+        <button type="submit" class="btn btn-primary">Termin buchen</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section section section-alt">
+    <div class="container">
+      <div class="contact-header">
+        <p class="contact-label">KONTAKT</p>
+        <h2>Sprechen Sie mit uns</h2>
+        <p class="muted">Sie haben Fragen oder wünschen ein Angebot? Wir freuen uns auf Ihre Nachricht.</p>
+      </div>
+
+      <div class="contact-wrapper">
         <div class="contact-info">
+          <div class="card info-card">
+            <h3>📞 Telefon</h3>
+            <p><a href="tel:+4915120461265">+49 151 2046 1265</a></p>
+          </div>
 
-            <div class="info-card">
-                <h3 data-de="📞 Telefon" data-en="📞 Phone">📞 Telefon</h3>
-                <p><a href="tel:+4915120461265">+49 151 2046 1265</a></p>
-            </div>
+          <div class="card info-card">
+            <h3>📧 E-Mail</h3>
+            <p><a href="mailto:info.klarblickservice@gmail.com">info.klarblickservice@gmail.com</a></p>
+          </div>
 
-            <div class="info-card">
-                <h3 data-de="📧 E-Mail" data-en="📧 Email">📧 E-Mail</h3>
-                <p><a href="mailto:info.klarblickservice@gmail.com">info.klarblickservice@gmail.com</a></p>
-            </div>
-
-            <div class="info-card">
-                <h3 data-de="💬 WhatsApp" data-en="💬 WhatsApp">💬 WhatsApp</h3>
-                <p>
-                    <a href="https://wa.me/4915120461265" target="_blank"
-                       data-de="WhatsApp-Chat starten"
-                       data-en="Start WhatsApp chat">
-                       WhatsApp-Chat starten
-                    </a>
-                </p>
-            </div>
-
+          <div class="card info-card">
+            <h3>💬 WhatsApp</h3>
+            <p>
+              <a href="https://wa.me/4915120461265" target="_blank" rel="noopener noreferrer">
+                WhatsApp-Chat starten
+              </a>
+            </p>
+          </div>
         </div>
 
-        <!-- Contact Form -->
-        <form id="contactForm" class="contact-form" method="POST">
+        <form id="contactForm" class="form contact-form" method="POST">
+          <h3>Nachricht senden</h3>
 
-            <h3 data-de="Nachricht senden" data-en="Send Message">Nachricht senden</h3>
+          <input type="text" name="name" required placeholder="Ihr Name">
+          <input type="email" name="email" required placeholder="Ihre E-Mail">
+          <input type="tel" name="phone" placeholder="Telefon (optional)">
+          <textarea name="message" required placeholder="Ihre Nachricht oder Frage" rows="5"></textarea>
 
-            <input type="text" name="name" required
-                   placeholder="Ihr Name"
-                   data-de-placeholder="Ihr Name"
-                   data-en-placeholder="Your Name">
+          <button type="submit" class="btn btn-primary">Nachricht senden</button>
 
-            <input type="email" name="email" required
-                   placeholder="Ihre E-Mail"
-                   data-de-placeholder="Ihre E-Mail"
-                   data-en-placeholder="Your Email">
-
-            <textarea name="message" required
-                      placeholder="Ihre Nachricht oder Frage"
-                      data-de-placeholder="Ihre Nachricht oder Frage"
-                      data-en-placeholder="Your message or question"></textarea>
-
-            <input type="hidden" name="_next" value="https://yourdomain.com/success.html">
-            <input type="hidden" name="_captcha" value="false">
-
-            <button type="submit"
-                    data-de="Nachricht senden"
-                    data-en="Send Message">
-                Nachricht senden
-            </button>
-
+          <p class="small muted">
+            Mit dem Absenden akzeptieren Sie unsere <a href="/datenschutz.html">Datenschutzerklärung</a>.
+          </p>
         </form>
-
+      </div>
     </div>
-</section>
+  </section>
 
-
-    <footer class="site-footer">
-        <div class="footer-inner">
-            <small data-de="© <span id=&quot;year&quot;></span> Your Window. Alle Rechte vorbehalten."
-                data-en="© <span id=&quot;year&quot;></span> Your Window. All rights reserved.">©
-                <span id="year"></span> Your Window. Alle Rechte vorbehalten.</small>
-            <nav class="footer-nav" aria-label="Footer">
-                <a href="/impressum.html" data-de="Impressum" data-en="Impressum">Impressum</a>
-                <a href="/datenschutz.html" data-de="Datenschutz" data-en="Privacy Policy">Datenschutz</a>
-            </nav>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
-    <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-    </script>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <small>© <span id="year"></span> my window. Alle Rechte vorbehalten.</small>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="/impressum.html">Impressum</a>
+        <a href="/datenschutz.html">Datenschutz</a>
+      </nav>
+    </div>
+  </footer>
 </body>
-
 </html>
