@@ -201,19 +201,111 @@
     <section id="services" class="section">
         <div class="container">
             <p class="eyebrow">Unsere Leistungen</p>
-            <h2>Alles aus einer Hand</h2>
+            <h2>Unsere Dienstleistungen</h2>
 
-            <div class="services-grid">
-                <button class="card service-btn" type="button" onclick="toggleService('grund')">
-                    Grundreinigung
-                </button>
-                <button class="card service-btn" type="button" onclick="toggleService('sonder')">
-                    Sonderreinigung
-                </button>
-                <button class="card service-btn" type="button" onclick="toggleService('gewerbe')">
-                    Gewerbliche Reinigung
-                </button>
-            </div>
+           <div class="services-grid">
+
+  <!-- GRUND -->
+  <div class="flip-card" onclick="toggleFlip(this)">
+    <div class="flip-inner">
+      <div class="flip-front card">
+        <h3>Grundreinigung</h3>
+        <p class="muted">Klicken für Details</p>
+      </div>
+
+      <div class="flip-back card">
+        <h3>Grundreinigung</h3>
+        <p class="muted">
+          Gründliche Reinigung von Fenstern, Glasflächen, Rahmen und Fensterbänken.
+          Dabei entfernen wir Schmutz, Staub und alltägliche Ablagerungen zuverlässig und streifenfrei –
+          für klare Sicht und ein gepflegtes Erscheinungsbild.
+        </p>
+
+        <h4>Vorher / Nachher</h4>
+        <div class="gallery">
+          <img src="bilder/grund-vorher.jpg" alt="Grundreinigung vorher" loading="lazy">
+          <img src="bilder/grund-nachher.jpg" alt="Grundreinigung nachher" loading="lazy">
+        </div>
+
+        <h4>Preisliste (pro Fenster)</h4>
+        <ul class="price-list">
+          <li>Nur innen: <b>3 €</b></li>
+          <li>Nur außen: <b>4 €</b></li>
+          <li>Innen & außen: <b>6 €</b></li>
+          <li><b>Ab 10 Fenstern: 10% Rabatt</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SONDER -->
+  <div class="flip-card" onclick="toggleFlip(this)">
+    <div class="flip-inner">
+      <div class="flip-front card">
+        <h3>Sonderreinigung</h3>
+        <p class="muted">Klicken für Details</p>
+      </div>
+
+      <div class="flip-back card">
+        <h3>Sonderreinigung</h3>
+        <p class="muted">
+          Für besondere Anforderungen wie nach einem Umzug, einer Renovierung oder bei starken Verschmutzungen.
+          Wir entfernen hartnäckige Rückstände wie Kalk, Bauschmutz, Fett oder andere intensive Verunreinigungen
+          gründlich und materialschonend.
+        </p>
+
+        <h4>Vorher / Nachher</h4>
+        <div class="gallery">
+          <img src="bilder/sonder-vorher.jpg" alt="Sonderreinigung vorher" loading="lazy">
+          <img src="bilder/sonder-nachher.jpg" alt="Sonderreinigung nachher" loading="lazy">
+        </div>
+
+        <h4>Preisliste (pro Fenster)</h4>
+        <ul class="price-list">
+          <li>Nur innen: <b>3 €</b></li>
+          <li>Nur außen: <b>4 €</b></li>
+          <li>Innen & außen: <b>6 €</b></li>
+          <li>Rahmen & Fensterbänke: <b>+ 2 €</b> pro Fenster</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- GEWERBE -->
+  <div class="flip-card" onclick="toggleFlip(this)">
+    <div class="flip-inner">
+      <div class="flip-front card">
+        <h3>Gewerbliche Reinigung</h3>
+        <p class="muted">Klicken für Details</p>
+      </div>
+
+      <div class="flip-back card">
+        <h3>Gewerbliche Reinigung</h3>
+        <p class="muted">
+          Professionelle Reinigung für Büros, Kanzleien, Praxen, Restaurants und Cafés.
+          Diskret, zuverlässig und flexibel – angepasst an Ihre Öffnungszeiten, damit der Betrieb
+          ungestört weiterlaufen kann.
+        </p>
+
+        <h4>Vorher / Nachher</h4>
+        <div class="gallery">
+          <img src="bilder/gewerbe-vorher.jpg" alt="Gewerbe vorher" loading="lazy">
+          <img src="bilder/gewerbe-nachher.jpg" alt="Gewerbe nachher" loading="lazy">
+        </div>
+
+        <h4>Preisliste (pro Fenster)</h4>
+        <ul class="price-list">
+          <li>Nur innen: <b>3 €</b></li>
+          <li>Nur außen: <b>4 €</b></li>
+          <li>Innen & außen: <b>6 €</b></li>
+          <li><b>Ab 10 Fenstern: 10% Rabatt</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
 
             <!-- GRUND -->
             <div id="grund" class="service-detail">

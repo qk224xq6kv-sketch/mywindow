@@ -48,3 +48,10 @@ document.getElementById('contactForm').addEventListener('submit', (e) => {
   alert('Nachricht erhalten. Wir melden uns bald!');
   e.target.reset();
 });
+// Flip cards (Services)
+function toggleFlip(card) {
+  document.querySelectorAll(".flip-card.is-flipped").forEach((el) => {
+    if (el !== card) el.classList.remove("is-flipped");
+  });
+  card.classList.toggle("is-flipped");
+}
