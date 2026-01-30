@@ -18,32 +18,51 @@
             emailjs.init("EkjsjWA3ij3hA-Deg");
 
             // Toast
-            function showToast(text) {
-                const el = document.getElementById("toast");
-                if (!el) return;
-                el.textContent = text;
-                el.classList.add("show");
-                setTimeout(() => el.classList.remove("show"), 2500);
-            }
+           function showToast(text, isError = false) {
+    const el = document.getElementById("toast");
+    if (!el) return;
+    el.textContent = text;
+    el.classList.toggle("error", isError);
+    el.classList.add("show");
+    setTimeout(() => el.classList.remove("show"), 2500);
+}
 
             // Form Handling
             function handleForm(formId, serviceId, templateId) {
-                const form = document.getElementById(formId);
-                if (!form) return;
+    const form = document.getElementById(formId);
+    if (!form) return;
 
-                form.addEventListener("submit", (event) => {
-                    event.preventDefault();
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
 
-                    showToast("Vielen Dank! Wir haben Ihre Anfrage erhalten.");
+        // Honeypot Anti-Spam (siehe Punkt 3)
+        const honeypot = form.querySelector('input[name="website"]');
+        if (honeypot && honeypot.value) return;
 
-                    emailjs.sendForm(serviceId, templateId, form)
-                        .then(() => form.reset())
-                        .catch((error) => {
-                            console.log("EmailJS Fehler:", error);
-                            form.reset();
-                        });
-                });
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn ? submitBtn.textContent : "";
+
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Senden…";
+        }
+
+        try {
+            await emailjs.sendForm(serviceId, templateId, form);
+            showToast("Danke! Ihre Nachricht wurde gesendet.");
+            form.reset();
+        } catch (error) {
+            console.log("EmailJS Fehler:", error);
+            showToast("Ups – das Senden hat nicht geklappt. Bitte später erneut versuchen.", true);
+        } finally {
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
             }
+        }
+    });
+}
+
 
             // Booking
             handleForm("bookingForm", "service_ec65ghp", "template_170jtv3");
@@ -321,6 +340,12 @@
             <h2>Termin buchen</h2>
 
             <form id="bookingForm" class="form">
+              <div class="honeypot" aria-hidden="true">
+  <label>Bitte leer lassen
+    <input type="text" name="website" autocomplete="off" tabindex="-1">
+  </label>
+</div>
+
                 <input type="text" name="name" placeholder="Ihr Name" required>
                 <input type="email" name="email" placeholder="E-Mail" required>
                 <input type="tel" name="phone" placeholder="Telefon" required>
@@ -366,6 +391,12 @@
                 </div>
 
                 <form id="contactForm" class="form">
+                  <div class="honeypot" aria-hidden="true">
+  <label>Bitte leer lassen
+    <input type="text" name="website" autocomplete="off" tabindex="-1">
+  </label>
+</div>
+
                     <h3>Nachricht senden</h3>
                     <input type="text" name="name" placeholder="Ihr Name" required>
                     <input type="email" name="email" placeholder="Ihre E-Mail" required>
