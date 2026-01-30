@@ -8,67 +8,66 @@
   <link rel="stylesheet" href="styles.css" />
 
   <!-- EmailJS -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+ <script type="text/javascript">
+document.addEventListener("DOMContentLoaded", () => {
 
-  <script>
-    emailjs.init("EkjsjWA3ij3hA-Deg");
+  // EmailJS initialisieren
+  emailjs.init("EkjsjWA3ij3hA-Deg");
 
-    document.addEventListener("DOMContentLoaded", () => {
-      // Intro ausblenden
-      setTimeout(() => document.body.classList.add("intro-done"), 1200);
+  // Toast
+  function showToast(text) {
+    const el = document.getElementById("toast");
+    if (!el) return;
+    el.textContent = text;
+    el.classList.add("show");
+    setTimeout(() => el.classList.remove("show"), 2500);
+  }
 
-      // Toast
-      function showToast(text) {
-        const el = document.getElementById("toast");
-        if (!el) return;
-        el.textContent = text;
-        el.classList.add("show");
-        setTimeout(() => el.classList.remove("show"), 2500);
-      }
+  // Form Handling
+  function handleForm(formId, serviceId, templateId) {
+    const form = document.getElementById(formId);
+    if (!form) return;
 
-      // Forms (erst senden, dann resetten)
-      function handleForm(formId, serviceId, templateId) {
-        const form = document.getElementById(formId);
-        if (!form) return;
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
 
-        form.addEventListener("submit", (event) => {
-          event.preventDefault();
+      showToast("Vielen Dank! Wir haben Ihre Anfrage erhalten.");
 
-          // Kunde sieht immer Erfolg
-          showToast("Vielen Dank! Wir haben Ihre Anfrage erhalten.");
-
-          emailjs.sendForm(serviceId, templateId, form)
-            .then(() => form.reset())
-            .catch((error) => {
-              console.log("EmailJS Hintergrund-Fehler:", error);
-              form.reset();
-            });
+      emailjs.sendForm(serviceId, templateId, form)
+        .then(() => form.reset())
+        .catch((error) => {
+          console.log("EmailJS Fehler:", error);
+          form.reset();
         });
-      }
-
-      // Booking
-      handleForm("bookingForm", "service_ec65ghp", "template_170jtv3");
-      // Contact
-      handleForm("contactForm", "service_4j7i3fp", "template_24ws2c9");
-
-      // Footer Jahr
-      const yearEl = document.getElementById("year");
-      if (yearEl) yearEl.textContent = new Date().getFullYear();
     });
+  }
 
-    // Leistungen: auf/zu wie Accordion
-    function toggleService(id) {
-      const el = document.getElementById(id);
-      if (!el) return;
+  // Booking
+  handleForm("bookingForm", "service_ec65ghp", "template_170jtv3");
+  // Contact
+  handleForm("contactForm", "service_4j7i3fp", "template_24ws2c9");
 
-      document.querySelectorAll(".service-detail").forEach((box) => {
-        if (box !== el) box.classList.remove("open");
-      });
+  // Footer Jahr
+  const yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-      el.classList.toggle("open");
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  </script>
+});
+
+// Leistungen: Accordion
+function toggleService(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  document.querySelectorAll(".service-detail").forEach((box) => {
+    if (box !== el) box.classList.remove("open");
+  });
+
+  el.classList.toggle("open");
+  el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+</script>
+
 </head>
 
 <body>
