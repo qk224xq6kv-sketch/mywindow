@@ -1,16 +1,23 @@
-// Language switcher
-document.getElementById('languageSelect').addEventListener('change', (e) => {
-  const lang = e.target.value;
-  document.querySelectorAll('[data-de][data-en]').forEach(el => {
-    el.textContent = el.getAttribute(`data-${lang}`);
+// Language switcher (safe)
+const languageSelect = document.getElementById('languageSelect');
+if (languageSelect) {
+  languageSelect.addEventListener('change', (e) => {
+    const lang = e.target.value;
+    document.querySelectorAll('[data-de][data-en]').forEach(el => {
+      el.textContent = el.getAttribute(`data-${lang}`);
+    });
+    document.querySelectorAll('[data-de-placeholder][data-en-placeholder]').forEach(el => {
+      el.placeholder = el.getAttribute(`data-${lang}-placeholder`);
+    });
   });
-  document.querySelectorAll('[data-de-placeholder][data-en-placeholder]').forEach(el => {
-    el.placeholder = el.getAttribute(`data-${lang}-placeholder`);
-  });
-});
+}
+
 
 // Booking form submission
-document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+const bookingForm = document.getElementById('bookingForm');
+if (bookingForm) bookingForm.addEventListener('submit', async (e) => {
+});
+
   e.preventDefault();
   
   const inputs = e.target.querySelectorAll('input, select, textarea');
@@ -39,12 +46,11 @@ document.getElementById('bookingForm').addEventListener('submit', async (e) => {
     }
   } catch (error) {
     alert('Fehler beim Senden: ' + error.message);
-  }
-});
+  }// Contact form submission
+const contactForm = document.getElementById('contactForm');
+if (contactForm) contactForm.addEventListener('submit', (e) => {
 
-// Contact form submission
-document.getElementById('contactForm').addEventListener('submit', (e) => {
-  e.preventDefault();
+e.preventDefault();
   alert('Nachricht erhalten. Wir melden uns bald!');
   e.target.reset();
 });
@@ -55,3 +61,34 @@ function toggleFlip(card) {
   });
   card.classList.toggle("is-flipped");
 }
+// Vorteil-Accordion (Memory-Effekt: nur eins offen)
+const advAccordion = document.getElementById("advAccordion");
+if (advAccordion) {
+  advAccordion.querySelectorAll(".adv-item").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const panel = btn.nextElementSibling;
+
+      // alles schließen
+      advAccordion.querySelectorAll(".adv-panel").forEach((p) => {
+        if (p !== panel) p.hidden = true;
+      });
+
+      advAccordion.querySelectorAll(".adv-item").forEach((b) => {
+        if (b !== btn) {
+          b.setAttribute("aria-expanded", "false");
+          const icon = b.querySelector(".adv-icon");
+          if (icon) icon.textContent = "+";
+        }
+      });
+
+      // aktuelles togglen
+      const isOpen = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!isOpen));
+      panel.hidden = isOpen;
+
+      const icon = btn.querySelector(".adv-icon");
+      if (icon) icon.textContent = isOpen ? "+" : "–";
+    });
+  });
+}
+
