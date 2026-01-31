@@ -61,7 +61,6 @@
         });
       }
 
-      // Booking & Contact aktivieren
       handleForm("bookingForm", "service_ec65ghp", "template_170jtv3");
       handleForm("contactForm", "service_4j7i3fp", "template_24ws2c9");
 
@@ -69,14 +68,60 @@
       const yearEl = document.getElementById("year");
       if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-      // Flip Cards: nur eine offen (Memory)
-      const flipCards = document.querySelectorAll(".flip-card");
-      flipCards.forEach((card) => {
+      // ===== Flip Cards (Memory + dynamische Höhe) =====
+      const cards = Array.from(document.querySelectorAll(".flip-card"));
+
+      function setCardHeight(card, side) {
+        // side: "front" | "back"
+        const inner = card.querySelector(".flip-inner");
+        const front = card.querySelector(".flip-front");
+        const back = card.querySelector(".flip-back");
+        if (!inner || !front || !back) return;
+
+        // Wir messen die Höhe der Seite, die sichtbar sein soll.
+        // Damit die Karte "nach unten wächst" statt zu scrollen.
+        const target = side === "back" ? back : front;
+
+        // Temporär sicherstellen, dass wir messen können:
+        // (back ist in 3D rotiert, aber die Box-Höhe ist messbar)
+        const h = target.scrollHeight;
+
+        inner.style.height = h + "px";
+      }
+
+      // Initialhöhe: Frontseite
+      cards.forEach(card => setCardHeight(card, "front"));
+
+      function closeOthers(current) {
+        cards.forEach(c => {
+          if (c !== current && c.classList.contains("is-flipped")) {
+            c.classList.remove("is-flipped");
+            setCardHeight(c, "front");
+          }
+        });
+      }
+
+      cards.forEach(card => {
         card.addEventListener("click", () => {
-          flipCards.forEach((c) => {
-            if (c !== card) c.classList.remove("is-flipped");
-          });
-          card.classList.toggle("is-flipped");
+          const isOpen = card.classList.contains("is-flipped");
+          closeOthers(card);
+
+          if (isOpen) {
+            card.classList.remove("is-flipped");
+            setCardHeight(card, "front");
+          } else {
+            card.classList.add("is-flipped");
+            // nach dem Flip: Höhe auf Back setzen
+            // kleines Timeout, damit Layout sicher ist
+            setTimeout(() => setCardHeight(card, "back"), 0);
+          }
+        });
+      });
+
+      // Bei Resize neu berechnen (z.B. Handy drehen)
+      window.addEventListener("resize", () => {
+        cards.forEach(card => {
+          setCardHeight(card, card.classList.contains("is-flipped") ? "back" : "front");
         });
       });
     });
@@ -99,7 +144,6 @@
         <a class="logo" href="#top" aria-label="Klarblick Start">Klarblick</a>
 
         <ul class="nav-menu">
-          <li><a href="#about">Über uns</a></li>
           <li><a href="#values">Vorteile</a></li>
           <li><a href="#services">Leistungen</a></li>
           <li><a href="#contact">Kontakt</a></li>
@@ -178,11 +222,12 @@
               <h3>Grundreinigung</h3>
               <p class="muted">
                 Gründliche Reinigung von Fenstern, Glasflächen, Rahmen und Fensterbänken.
-                Dabei entfernen wir Schmutz, Staub und alltägliche Ablagerungen zuverlässig und streifenfrei.
+                Dabei entfernen wir Schmutz, Staub und alltägliche Ablagerungen zuverlässig und streifenfrei –
+                für klare Sicht und ein gepflegtes Erscheinungsbild.
               </p>
 
               <h4>Vorher / Nachher</h4>
-              <div class="gallery">
+              <div class="gallery gallery-stacked">
                 <img src="bilder/grund-vorher.jpg" alt="Dachfenster vor der Grundreinigung" loading="lazy">
                 <img src="bilder/grund-nachher.jpg" alt="Dachfenster nach der Grundreinigung" loading="lazy">
               </div>
@@ -209,12 +254,12 @@
             <div class="flip-back card">
               <h3>Sonderreinigung</h3>
               <p class="muted">
-                Für besondere Anforderungen wie nach Umzug, Renovierung oder bei starken Verschmutzungen.
-                Hartnäckige Rückstände entfernen wir materialschonend und gründlich.
+                Für besondere Anforderungen wie nach einem Umzug, einer Renovierung oder bei starken Verschmutzungen.
+                Wir entfernen hartnäckige Rückstände gründlich und materialschonend.
               </p>
 
               <h4>Vorher / Nachher</h4>
-              <div class="gallery">
+              <div class="gallery gallery-stacked">
                 <img src="bilder/sonder-vorher.jpg" alt="Glasdach vor der Sonderreinigung" loading="lazy">
                 <img src="bilder/sonder-nachher.jpg" alt="Glasdach nach der Sonderreinigung" loading="lazy">
               </div>
@@ -241,12 +286,12 @@
             <div class="flip-back card">
               <h3>Gewerbliche Reinigung</h3>
               <p class="muted">
-                Reinigung für Büros, Praxen, Restaurants & Cafés – diskret, zuverlässig und flexibel
-                nach Ihren Öffnungszeiten.
+                Professionelle Reinigung für Büros, Praxen, Restaurants und Cafés.
+                Diskret, zuverlässig und flexibel – angepasst an Ihre Öffnungszeiten.
               </p>
 
               <h4>Vorher / Nachher</h4>
-              <div class="gallery">
+              <div class="gallery gallery-stacked">
                 <img src="bilder/gewerbe-vorher.jpg" alt="Schaufenster vor der Gewerbereinigung" loading="lazy">
                 <img src="bilder/gewerbe-nachher.jpg" alt="Schaufenster nach der Gewerbereinigung" loading="lazy">
               </div>

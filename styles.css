@@ -1,5 +1,5 @@
 /* ================= RESET ================= */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin:0; padding:0; box-sizing:border-box; }
 
 :root{
   --bg:#f6fbf8;
@@ -16,52 +16,50 @@
 }
 
 body{
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
 }
 
-a{ color: inherit; text-decoration: none; }
-a:hover{ text-decoration: none; }
+a{ color:inherit; text-decoration:none; }
+a:hover{ text-decoration:none; }
 
 .container{
-  max-width: 1100px;
-  margin: auto;
-  padding: 0 16px;
+  max-width:1100px;
+  margin:auto;
+  padding:0 16px;
 }
 
-.section{ padding: 70px 0; }
+.section{ padding:70px 0; }
 
-h2{
-  text-align:center;
-  margin-bottom:25px;
-  font-size:30px;
-}
+h2{ text-align:center; margin-bottom:25px; font-size:30px; }
+
+.muted{ color:var(--muted); }
 
 /* ================= NAVIGATION ================= */
 .site-header{
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: rgba(255,255,255,.9);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--line);
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
 }
 
 .nav-container{
-  max-width: 1100px;
-  margin: auto;
-  padding: 14px 16px;
+  max-width:1100px;
+  margin:auto;
+  padding:14px 16px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap: 10px;
+  gap:10px;
 }
 
 .logo{
-  font-weight: 900;
-  font-size: 20px;
+  font-weight:900;
+  font-size:20px;
 }
 
 .nav-menu{
@@ -71,192 +69,189 @@ h2{
 }
 
 .nav-menu a{
-  padding: 8px 12px;
-  border-radius: 10px;
-  color: var(--muted);
-  font-weight: 600;
+  padding:8px 12px;
+  border-radius:10px;
+  color:var(--muted);
+  font-weight:600;
 }
 
 .nav-menu a:hover{
   background:#e8f5f0;
-  color: var(--text);
+  color:var(--text);
 }
 
 /* ================= BUTTONS ================= */
 .btn{
-  padding: 10px 18px;
-  border-radius: 999px;
-  border: none;
-  font-weight: 700;
-  cursor: pointer;
+  padding:10px 18px;
+  border-radius:999px;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
   display:inline-block;
 }
 
 .btn-primary{
-  background: linear-gradient(135deg,var(--brand2),var(--brand));
-  color: white;
+  background:linear-gradient(135deg,var(--brand2),var(--brand));
+  color:white;
 }
 
-.btn-primary:hover{ opacity: .9; }
+.btn-primary:hover{ opacity:.9; }
 
 .btn:focus-visible,
 .nav-menu a:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible{
-  outline: 3px solid rgba(14,165,233,.35);
-  outline-offset: 3px;
+  outline:3px solid rgba(14,165,233,.35);
+  outline-offset:3px;
 }
 
 /* ================= HERO ================= */
 .hero-background{ position:relative; }
 
 .hero-background img{
-  width: 100%;
-  height: 60vh;
-  object-fit: cover;
+  width:100%;
+  height:60vh;
+  object-fit:cover;
 }
 
 .hero-overlay{
   position:absolute;
-  inset: 0;
+  inset:0;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  background: rgba(255,255,255,.75);
+  background:rgba(255,255,255,.75);
   text-align:center;
-  gap: 10px;
+  gap:10px;
 }
 
-.hero-overlay h1{ font-size: 42px; }
+.hero-overlay h1{ font-size:42px; }
 
 /* ================= CARDS ================= */
 .card{
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 22px;
-  box-shadow: var(--shadow);
-  transition: .2s;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:22px;
+  box-shadow:var(--shadow);
+  transition:.2s;
 }
 
-.card:hover{ transform: translateY(-4px); }
+.card:hover{ transform:translateY(-4px); }
 
 /* ================= VALUES / FEATURES ================= */
 .feature-grid{
   display:grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
 }
 
-.feature{
-  text-align: center;
-}
-
-.icon{
-  font-size: 28px;
-  margin-bottom: 8px;
-}
-
-.muted{ color: var(--muted); }
+.feature{ text-align:center; }
+.icon{ font-size:28px; margin-bottom:8px; }
 
 /* ================= SERVICES GRID ================= */
 .services-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:18px;
-  margin-top: 20px;
+  margin-top:20px;
 }
 
 /* ================= FLIP CARDS ================= */
+/* Damit die Karte nach unten wachsen kann, bekommt .flip-inner eine dynamische Höhe per JS */
 .flip-card{
-  perspective: 1200px;
-  cursor: pointer;
+  perspective:1200px;
+  cursor:pointer;
 }
 
 .flip-inner{
-  position: relative;
-  min-height: 260px;
-  transform-style: preserve-3d;
-  transition: transform .6s ease;
+  position:relative;
+  width:100%;
+  transform-style:preserve-3d;
+  transition:transform .6s ease, height .25s ease;
+  height:auto; /* wird per JS gesetzt */
 }
 
 .flip-card.is-flipped .flip-inner{
-  transform: rotateY(180deg);
+  transform:rotateY(180deg);
 }
 
 .flip-front,
 .flip-back{
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  border-radius: var(--radius);
+  position:absolute;
+  inset:0;
+  backface-visibility:hidden;
+  border-radius:var(--radius);
 }
 
 .flip-front{
   display:flex;
-  flex-direction: column;
-  align-items:center;
+  flex-direction:column;
   justify-content:center;
+  align-items:center;
   text-align:center;
-  gap: 8px;
+  gap:8px;
 }
 
 .flip-back{
-  transform: rotateY(180deg);
-  overflow: auto;
-  max-height: 520px;
+  transform:rotateY(180deg);
+  /* kein overflow + kein max-height => Inhalt steht ruhig & läuft nach unten (über die Card-Höhe) */
 }
 
+.flip-back h4{ margin-top:14px; }
+
+/* Preise */
 .price-list{
-  margin-top: 12px;
-  line-height: 1.8;
-  padding-left: 18px;
+  margin-top:10px;
+  padding-left:18px;
+  line-height:1.8;
 }
 
-/* ================= GALLERY ================= */
+/* ================= GALLERY (ruhig, ohne horizontal scroll) ================= */
 .gallery{
-  display:flex;
-  gap:15px;
-  overflow-x:auto;
-  margin-top:15px;
-  padding-bottom: 6px;
+  margin-top:12px;
 }
 
-.gallery img{
-  width: 260px;
-  height: 180px;
-  object-fit: cover;
+.gallery-stacked{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.gallery-stacked img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
   border-radius:12px;
-  border: 1px solid var(--line);
+  border:1px solid var(--line);
 }
 
 /* ================= FORMS ================= */
 .form{
-  max-width: 500px;
-  margin: auto;
+  max-width:500px;
+  margin:auto;
   display:flex;
   flex-direction:column;
   gap:12px;
 }
 
 input,select,textarea{
-  padding: 12px;
-  border-radius: 12px;
-  border: 1px solid var(--line);
+  padding:12px;
+  border-radius:12px;
+  border:1px solid var(--line);
 }
 
 input:focus,textarea:focus,select:focus{
-  outline: none;
-  border-color: var(--brand);
+  outline:none;
+  border-color:var(--brand);
 }
 
-textarea{ resize: vertical; }
+textarea{ resize:vertical; }
+.form button{ margin-top:10px; }
 
-.form button{ margin-top: 10px; }
-
-/* Honeypot Anti-Spam unsichtbar */
+/* Honeypot */
 .honeypot{
   position:absolute;
   left:-9999px;
@@ -266,7 +261,7 @@ textarea{ resize: vertical; }
   overflow:hidden;
 }
 
-/* Button disabled */
+/* Disabled Button */
 button:disabled{
   opacity:.6;
   cursor:not-allowed;
@@ -275,58 +270,54 @@ button:disabled{
 /* ================= FOOTER ================= */
 footer{
   text-align:center;
-  padding: 20px;
-  border-top: 1px solid var(--line);
-  margin-top: 30px;
-  color: var(--muted);
+  padding:20px;
+  border-top:1px solid var(--line);
+  margin-top:30px;
+  color:var(--muted);
 }
 
 /* ================= TOAST ================= */
 .toast{
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: white;
-  padding: 12px 18px;
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-  opacity: 0;
-  transition: .3s;
-  border: 1px solid transparent;
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:white;
+  padding:12px 18px;
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  opacity:0;
+  transition:.3s;
+  border:1px solid transparent;
 }
 
-.toast.show{ opacity: 1; }
-
-.toast.error{
-  border: 1px solid #ef4444;
-}
+.toast.show{ opacity:1; }
+.toast.error{ border:1px solid #ef4444; }
 
 /* ================= RESPONSIVE ================= */
-@media (max-width: 900px){
-  .services-grid{ grid-template-columns: 1fr 1fr; }
-  .feature-grid{ grid-template-columns: 1fr 1fr; }
+@media (max-width:900px){
+  .services-grid{ grid-template-columns:1fr 1fr; }
+  .feature-grid{ grid-template-columns:1fr 1fr; }
 
-  .nav-container{
-    flex-wrap: wrap;
-  }
-
+  .nav-container{ flex-wrap:wrap; }
   .nav-menu{
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    gap: 8px;
+    flex-wrap:wrap;
+    justify-content:center;
+    width:100%;
+    gap:8px;
   }
 
-  .hero-overlay h1{ font-size: 28px; }
+  .hero-overlay h1{ font-size:28px; }
+  .gallery-stacked img{ height:200px; }
 }
 
-@media (max-width: 560px){
-  .services-grid{ grid-template-columns: 1fr; }
-  .feature-grid{ grid-template-columns: 1fr; }
+@media (max-width:560px){
+  .services-grid{ grid-template-columns:1fr; }
+  .feature-grid{ grid-template-columns:1fr; }
 
-  .gallery img{
-    width: 80vw;
-    height: 200px;
+  .gallery-stacked{
+    grid-template-columns:1fr;
   }
+  .gallery-stacked img{ height:220px; }
 }
+
