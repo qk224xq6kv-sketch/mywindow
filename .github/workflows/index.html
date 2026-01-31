@@ -1,93 +1,14 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Klarblick – Professionelle Fenster- & Gebäudereinigung</title>
-  <meta name="description"
-    content="Klarblick – Fenster- & Gebäudereinigung für Privat & Gewerbe. Termin buchen oder Nachricht senden." />
+  <meta name="description" content="Klarblick – Fenster- & Gebäudereinigung für Privat & Gewerbe. Termin buchen oder Nachricht senden." />
   <link rel="stylesheet" href="styles.css" />
-
-  <!-- EmailJS -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-
-      // EmailJS initialisieren
-      emailjs.init("EkjsjWA3ij3hA-Deg");
-
-      // Toast
-      function showToast(text, isError = false) {
-        const el = document.getElementById("toast");
-        if (!el) return;
-        el.textContent = text;
-        el.classList.toggle("error", isError);
-        el.classList.add("show");
-        setTimeout(() => el.classList.remove("show"), 2500);
-      }
-
-      // Form Handling
-      function handleForm(formId, serviceId, templateId) {
-        const form = document.getElementById(formId);
-        if (!form) return;
-
-        form.addEventListener("submit", async (event) => {
-          event.preventDefault();
-
-          // Honeypot Anti-Spam
-          const honeypot = form.querySelector('input[name="website"]');
-          if (honeypot && honeypot.value) return;
-
-          const submitBtn = form.querySelector('button[type="submit"]');
-          const originalText = submitBtn ? submitBtn.textContent : "";
-
-          if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.textContent = "Senden…";
-          }
-
-          try {
-            await emailjs.sendForm(serviceId, templateId, form);
-            showToast("Danke! Ihre Nachricht wurde gesendet.");
-            form.reset();
-          } catch (error) {
-            console.log("EmailJS Fehler:", error);
-            showToast("Ups – das Senden hat nicht geklappt. Bitte später erneut versuchen.", true);
-          } finally {
-            if (submitBtn) {
-              submitBtn.disabled = false;
-              submitBtn.textContent = originalText;
-            }
-          }
-        });
-      }
-
-      // Booking
-      handleForm("bookingForm", "service_ec65ghp", "template_170jtv3");
-      // Contact
-      handleForm("contactForm", "service_4j7i3fp", "template_24ws2c9");
-
-      // Footer Jahr
-      const yearEl = document.getElementById("year");
-      if (yearEl) yearEl.textContent = new Date().getFullYear();
-    });
-
-    // Flip cards: Immer nur eine offen
-    function toggleFlip(card) {
-      document.querySelectorAll(".flip-card.is-flipped").forEach((el) => {
-        if (el !== card) el.classList.remove("is-flipped");
-      });
-      card.classList.toggle("is-flipped");
-    }
-  </script>
 </head>
 
 <body>
-  <!-- Toast -->
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
-
   <!-- Header / Navigation -->
   <header class="site-header">
     <nav class="top-nav">
@@ -97,7 +18,6 @@
         <ul class="nav-menu">
           <li><a href="#values">Vorteile</a></li>
           <li><a href="#services">Leistungen</a></li>
-          <li><a href="#booking">Termin</a></li>
           <li><a href="#contact">Kontakt</a></li>
         </ul>
 
@@ -109,6 +29,7 @@
   <!-- Hero -->
   <section id="top" class="hero-section">
     <div class="hero-background">
+      <!-- Passe den Dateinamen an, wenn du ihn anders nennst -->
       <img src="bilder/hero.jpg" alt="Fenster- und Gebäudereinigung" loading="eager" />
       <div class="hero-overlay">
         <p class="hero-badge">VOLLSTÄNDIG VERSICHERT</p>
@@ -162,137 +83,146 @@
 
       <div class="services-grid">
 
-        <!-- GRUND -->
-        <div class="flip-card" onclick="toggleFlip(this)" role="button" tabindex="0" aria-label="Grundreinigung öffnen">
+        <!-- GRUNDREINIGUNG -->
+        <article class="flip-card" tabindex="0">
           <div class="flip-inner">
             <div class="flip-front card">
               <h3>Grundreinigung</h3>
-              <p class="muted">Klicken für Details</p>
+              <p class="muted">Klicken / Tippen für Details</p>
             </div>
 
             <div class="flip-back card">
-              <h3>Grundreinigung</h3>
+              <div class="service-back-content">
+                <h3>Grundreinigung</h3>
+                <p class="muted">
+                  Gründliche Reinigung von Fenstern, Glasflächen, Rahmen und Fensterbänken.
+                  Wir entfernen Schmutz, Staub und Ablagerungen zuverlässig und streifenfrei –
+                  für klare Sicht und ein gepflegtes Erscheinungsbild.
+                </p>
 
-              <!-- 1) TEXT -->
-              <p class="muted">
-                Gründliche Reinigung von Fenstern, Glasflächen, Rahmen und Fensterbänken.
-                Wir entfernen Schmutz, Staub und alltägliche Ablagerungen streifenfrei –
-                für klare Sicht und ein gepflegtes Erscheinungsbild.
-              </p>
+                <h4>Vorher / Nachher</h4>
+                <div class="media-grid two">
+                  <figure class="shot">
+                    <img src="bilder/grund-vorher.jpg" alt="Grundreinigung vorher" loading="lazy" />
+                    <figcaption>Vorher</figcaption>
+                  </figure>
+                  <figure class="shot">
+                    <img src="bilder/grund-nachher.jpg" alt="Grundreinigung nachher" loading="lazy" />
+                    <figcaption>Nachher</figcaption>
+                  </figure>
+                </div>
 
-              <!-- 2) BILDER -->
-              <h4 class="subhead">Vorher / Nachher</h4>
-              <div class="gallery">
-                <img src="bilder/grund-vorher.jpg" alt="Grundreinigung vorher" loading="lazy">
-                <img src="bilder/grund-nachher.jpg" alt="Grundreinigung nachher" loading="lazy">
-                <img src="bilder/grund-rahmen.jpg" alt="Grundreinigung Rahmen Detail" loading="lazy">
+                <h4>Preise (pro Fenster)</h4>
+                <ul class="price-list">
+                  <li><span>Nur innen</span><b>3 €</b></li>
+                  <li><span>Nur außen</span><b>4 €</b></li>
+                  <li><span>Innen & außen</span><b>6 €</b></li>
+                  <li class="highlight"><span>Ab 10 Fenstern</span><b>10% Rabatt</b></li>
+                </ul>
+
+                <button class="btn btn-ghost close-btn" type="button">Schließen</button>
               </div>
-
-              <!-- 3) PREISE -->
-              <h4 class="subhead">Preisliste (pro Fenster)</h4>
-              <ul class="price-list">
-                <li>Nur innen: <b>3 €</b></li>
-                <li>Nur außen: <b>4 €</b></li>
-                <li>Innen & außen: <b>6 €</b></li>
-                <li><b>Ab 10 Fenstern: 10% Rabatt</b></li>
-              </ul>
             </div>
           </div>
-        </div>
+        </article>
 
-        <!-- SONDER -->
-        <div class="flip-card" onclick="toggleFlip(this)" role="button" tabindex="0" aria-label="Sonderreinigung öffnen">
+        <!-- SONDERREINIGUNG -->
+        <article class="flip-card" tabindex="0">
           <div class="flip-inner">
             <div class="flip-front card">
               <h3>Sonderreinigung</h3>
-              <p class="muted">Klicken für Details</p>
+              <p class="muted">Klicken / Tippen für Details</p>
             </div>
 
             <div class="flip-back card">
-              <h3>Sonderreinigung</h3>
+              <div class="service-back-content">
+                <h3>Sonderreinigung</h3>
+                <p class="muted">
+                  Für besondere Anforderungen wie nach Umzug, Renovierung oder bei starken Verschmutzungen.
+                  Wir entfernen hartnäckige Rückstände (z. B. Kalk, Bauschmutz, Fett) gründlich und materialschonend.
+                </p>
 
-              <!-- 1) TEXT -->
-              <p class="muted">
-                Für besondere Anforderungen wie nach einem Umzug, einer Renovierung oder bei starken Verschmutzungen.
-                Wir entfernen hartnäckige Rückstände wie Kalk, Bauschmutz, Fett oder andere Verunreinigungen
-                gründlich und materialschonend.
-              </p>
+                <h4>Vorher / Nachher</h4>
+                <div class="media-grid two">
+                  <figure class="shot">
+                    <img src="bilder/sonder-vorher.jpg" alt="Sonderreinigung vorher" loading="lazy" />
+                    <figcaption>Vorher</figcaption>
+                  </figure>
+                  <figure class="shot">
+                    <img src="bilder/sonder-nachher.jpg" alt="Sonderreinigung nachher" loading="lazy" />
+                    <figcaption>Nachher</figcaption>
+                  </figure>
+                </div>
 
-              <!-- 2) BILDER -->
-              <h4 class="subhead">Vorher / Nachher</h4>
-              <div class="gallery">
-                <img src="bilder/sonder-vorher.jpg" alt="Sonderreinigung vorher" loading="lazy">
-                <img src="bilder/sonder-nachher.jpg" alt="Sonderreinigung nachher" loading="lazy">
+                <h4>Preise (pro Fenster)</h4>
+                <ul class="price-list">
+                  <li><span>Nur innen</span><b>3 €</b></li>
+                  <li><span>Nur außen</span><b>4 €</b></li>
+                  <li><span>Innen & außen</span><b>6 €</b></li>
+                  <li><span>Rahmen & Fensterbänke</span><b>+ 2 €</b></li>
+                </ul>
+
+                <button class="btn btn-ghost close-btn" type="button">Schließen</button>
               </div>
-
-              <!-- 3) PREISE -->
-              <h4 class="subhead">Preisliste (pro Fenster)</h4>
-              <ul class="price-list">
-                <li>Nur innen: <b>3 €</b></li>
-                <li>Nur außen: <b>4 €</b></li>
-                <li>Innen & außen: <b>6 €</b></li>
-                <li>Rahmen & Fensterbänke: <b>+ 2 €</b> pro Fenster</li>
-              </ul>
             </div>
           </div>
-        </div>
+        </article>
 
         <!-- GEWERBE -->
-        <div class="flip-card" onclick="toggleFlip(this)" role="button" tabindex="0" aria-label="Gewerbliche Reinigung öffnen">
+        <article class="flip-card" tabindex="0">
           <div class="flip-inner">
             <div class="flip-front card">
               <h3>Gewerbliche Reinigung</h3>
-              <p class="muted">Klicken für Details</p>
+              <p class="muted">Klicken / Tippen für Details</p>
             </div>
 
             <div class="flip-back card">
-              <h3>Gewerbliche Reinigung</h3>
+              <div class="service-back-content">
+                <h3>Gewerbliche Reinigung</h3>
+                <p class="muted">
+                  Professionelle Reinigung für Büros, Praxen, Restaurants und Cafés.
+                  Diskret, zuverlässig und flexibel – angepasst an Ihre Öffnungszeiten,
+                  damit der Betrieb ungestört weiterlaufen kann.
+                </p>
 
-              <!-- 1) TEXT -->
-              <p class="muted">
-                Professionelle Reinigung für Büros, Praxen, Restaurants und Cafés.
-                Diskret, zuverlässig und flexibel – angepasst an Ihre Öffnungszeiten,
-                damit der Betrieb ungestört weiterlaufen kann.
-              </p>
+                <h4>Standorte (Beispiele)</h4>
+                <div class="media-grid two">
+                  <figure class="shot">
+                    <img src="bilder/gewerbe-standort-1.jpg" alt="Gewerbe Standort 1" loading="lazy" />
+                    <figcaption>Standort 1</figcaption>
+                  </figure>
+                  <figure class="shot">
+                    <img src="bilder/gewerbe-standort-2.jpg" alt="Gewerbe Standort 2" loading="lazy" />
+                    <figcaption>Standort 2</figcaption>
+                  </figure>
+                </div>
 
-              <!-- 2) BILDER (Standorte) -->
-              <h4 class="subhead">Beispiele & Standorte</h4>
-              <div class="gallery">
-                <img src="bilder/gewerbe-standort-1.jpg" alt="Gewerbliche Reinigung – Standort 1" loading="lazy">
-                <img src="bilder/gewerbe-standort-2.jpg" alt="Gewerbliche Reinigung – Standort 2" loading="lazy">
+                <h4>Hinweis</h4>
+                <p class="muted small">
+                  Für Gewerbe erstellen wir Angebote individuell (Fläche, Erreichbarkeit, Intervalle).
+                </p>
+
+                <button class="btn btn-ghost close-btn" type="button">Schließen</button>
               </div>
-
-              <!-- 3) PREISE -->
-              <h4 class="subhead">Preise</h4>
-              <ul class="price-list">
-                <li><b>Preis auf Anfrage</b> (je nach Größe, Glasfläche & Frequenz)</li>
-                <li>Regelmäßige Reinigung: <b>Rabatt möglich</b></li>
-              </ul>
             </div>
           </div>
-        </div>
+        </article>
 
       </div>
     </div>
   </section>
 
-  <!-- Booking -->
+  <!-- Booking (Platzhalter) -->
   <section id="booking" class="section section-alt">
     <div class="container">
       <p class="eyebrow">Termin</p>
       <h2>Termin buchen</h2>
 
-      <form id="bookingForm" class="form">
-        <div class="honeypot" aria-hidden="true">
-          <label>Bitte leer lassen
-            <input type="text" name="website" autocomplete="off" tabindex="-1">
-          </label>
-        </div>
-
-        <input type="text" name="name" placeholder="Ihr Name" required>
-        <input type="email" name="email" placeholder="E-Mail" required>
-        <input type="tel" name="phone" placeholder="Telefon" required>
-        <input type="datetime-local" name="date" required>
+      <form class="form">
+        <input type="text" name="name" placeholder="Ihr Name" required />
+        <input type="email" name="email" placeholder="E-Mail" required />
+        <input type="tel" name="phone" placeholder="Telefon" required />
+        <input type="datetime-local" name="date" required />
 
         <select name="service" required>
           <option value="" selected disabled>Service wählen</option>
@@ -307,7 +237,7 @@
     </div>
   </section>
 
-  <!-- Contact -->
+  <!-- Kontakt (Platzhalter) -->
   <section id="contact" class="section">
     <div class="container">
       <p class="eyebrow">Kontakt</p>
@@ -332,30 +262,18 @@
           </div>
         </div>
 
-        <form id="contactForm" class="form">
-          <div class="honeypot" aria-hidden="true">
-            <label>Bitte leer lassen
-              <input type="text" name="website" autocomplete="off" tabindex="-1">
-            </label>
-          </div>
-
+        <form class="form">
           <h3>Nachricht senden</h3>
-          <input type="text" name="name" placeholder="Ihr Name" required>
-          <input type="email" name="email" placeholder="Ihre E-Mail" required>
-          <input type="tel" name="phone" placeholder="Telefon (optional)">
+          <input type="text" name="name" placeholder="Ihr Name" required />
+          <input type="email" name="email" placeholder="Ihre E-Mail" required />
+          <input type="tel" name="phone" placeholder="Telefon (optional)" />
           <textarea name="message" rows="5" placeholder="Ihre Nachricht" required></textarea>
-
           <button type="submit" class="btn btn-primary">Nachricht senden</button>
-
-          <p class="small muted">
-            Mit dem Absenden akzeptieren Sie unsere <a href="datenschutz.html">Datenschutzerklärung</a>.
-          </p>
         </form>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
   <footer class="site-footer">
     <div class="container footer-inner">
       <small>© <span id="year"></span> Klarblick. Alle Rechte vorbehalten.</small>
@@ -365,6 +283,34 @@
       </nav>
     </div>
   </footer>
-</body>
 
+  <script>
+    // Jahr im Footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Flip-Logik: Klick auf Karte = flip
+    document.querySelectorAll(".flip-card").forEach(card => {
+      card.addEventListener("click", (e) => {
+        // Wenn auf "Schließen" geklickt, nur schließen
+        if (e.target.classList.contains("close-btn")) {
+          card.classList.remove("is-flipped");
+          e.stopPropagation();
+          return;
+        }
+        card.classList.toggle("is-flipped");
+      });
+
+      // Tastatur: Enter/Space flip
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          card.classList.toggle("is-flipped");
+        }
+        if (e.key === "Escape") {
+          card.classList.remove("is-flipped");
+        }
+      });
+    });
+  </script>
+</body>
 </html>

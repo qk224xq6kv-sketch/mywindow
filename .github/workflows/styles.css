@@ -1,5 +1,5 @@
 /* ================= RESET ================= */
-*{margin:0;padding:0;box-sizing:border-box;}
+* { margin:0; padding:0; box-sizing:border-box; }
 
 :root{
   --bg:#f6fbf8;
@@ -21,8 +21,9 @@ body{
   color:var(--text);
   line-height:1.6;
 }
-a{color:inherit;text-decoration:none;}
-a:hover{text-decoration:none;}
+
+a{ color:inherit; text-decoration:none; }
+a:hover{ text-decoration:none; }
 
 .container{
   max-width:1100px;
@@ -30,25 +31,23 @@ a:hover{text-decoration:none;}
   padding:0 16px;
 }
 
-.section{padding:70px 0;}
-.section-alt{background:#eef7f2;}
+.section{ padding:70px 0; }
+.section-alt{ background:rgba(255,255,255,.55); }
 
-h2{text-align:center;margin-bottom:25px;font-size:30px;}
+h2{ text-align:center; margin-bottom:25px; font-size:30px; }
+.center{ text-align:center; }
+.muted{ color:var(--muted); }
+.small{ font-size: .92rem; }
 
 .eyebrow{
   text-align:center;
-  color:var(--muted);
-  font-weight:700;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  font-size:12px;
+  font-weight:800;
+  color:rgba(22,163,74,.9);
+  letter-spacing:.03em;
   margin-bottom:10px;
 }
 
-.center{text-align:center;}
-.muted{color:var(--muted);}
-
-/* ================= NAVIGATION ================= */
+/* ================= NAV ================= */
 .site-header{
   position:sticky;
   top:0;
@@ -68,11 +67,11 @@ h2{text-align:center;margin-bottom:25px;font-size:30px;}
   gap:12px;
 }
 
-.logo{font-weight:900;font-size:20px;}
+.logo{ font-weight:900; font-size:20px; }
 
 .nav-menu{
   display:flex;
-  gap:10px;
+  gap:15px;
   list-style:none;
   flex-wrap:wrap;
   justify-content:center;
@@ -84,6 +83,7 @@ h2{text-align:center;margin-bottom:25px;font-size:30px;}
   color:var(--muted);
   font-weight:600;
 }
+
 .nav-menu a:hover{
   background:#e8f5f0;
   color:var(--text);
@@ -106,15 +106,14 @@ h2{text-align:center;margin-bottom:25px;font-size:30px;}
   background:linear-gradient(135deg,var(--brand2),var(--brand));
   color:white;
 }
+.btn-primary:hover{ opacity:.92; }
 
 .btn-ghost{
   background:transparent;
   border:1px solid var(--line);
   color:var(--text);
 }
-
-.btn-primary:hover{opacity:.92;}
-.btn-ghost:hover{background:#ffffff;}
+.btn-ghost:hover{ background:#ffffff; }
 
 .btn:focus-visible,
 .nav-menu a:focus-visible,
@@ -126,7 +125,8 @@ textarea:focus-visible{
 }
 
 /* ================= HERO ================= */
-.hero-background{position:relative;}
+.hero-background{ position:relative; }
+
 .hero-background img{
   width:100%;
   height:60vh;
@@ -144,27 +144,28 @@ textarea:focus-visible{
   background:rgba(255,255,255,.75);
   text-align:center;
   gap:10px;
-  padding:18px;
+  padding:16px;
 }
 
 .hero-badge{
-  background:#ffffff;
-  border:1px solid var(--line);
+  display:inline-block;
+  font-weight:900;
+  font-size:.85rem;
   padding:6px 12px;
   border-radius:999px;
-  font-weight:800;
-  font-size:12px;
+  background:rgba(22,163,74,.12);
+  border:1px solid rgba(22,163,74,.2);
 }
 
-.hero-overlay h1{font-size:42px;}
-.hero-text{font-weight:700;color:var(--muted);}
+.hero-overlay h1{ font-size:42px; }
+.hero-text{ font-weight:700; }
 
 .hero-actions{
   display:flex;
   gap:10px;
   flex-wrap:wrap;
   justify-content:center;
-  margin-top:6px;
+  margin-top:10px;
 }
 
 /* ================= CARDS ================= */
@@ -174,38 +175,43 @@ textarea:focus-visible{
   border-radius:var(--radius);
   padding:22px;
   box-shadow:var(--shadow);
-  transition:.2s;
 }
-.card:hover{transform:translateY(-4px);}
 
-/* ================= VORTEILE ================= */
+.card h3{ margin-bottom:6px; }
+
 .feature-grid{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:18px;
-  margin-top:22px;
+  grid-template-columns:repeat(4, 1fr);
+  gap:16px;
 }
-.feature .icon{font-size:22px;margin-bottom:10px;}
+
+.feature .icon{
+  font-size:28px;
+  margin-bottom:8px;
+}
 
 /* ================= SERVICES GRID ================= */
 .services-grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(3, 1fr);
   gap:18px;
 }
 
 /* ================= FLIP CARD ================= */
 .flip-card{
-  perspective:1200px;
+  perspective: 1000px;
   cursor:pointer;
+  outline:none;
 }
+
 .flip-inner{
   position:relative;
   width:100%;
-  min-height:300px;
+  min-height:260px;
   transform-style:preserve-3d;
-  transition:transform .6s;
+  transition:transform .7s cubic-bezier(.2,.7,.2,1);
 }
+
 .flip-card.is-flipped .flip-inner{
   transform:rotateY(180deg);
 }
@@ -215,79 +221,104 @@ textarea:focus-visible{
   position:absolute;
   inset:0;
   backface-visibility:hidden;
+  border-radius:var(--radius);
 }
 
 .flip-front{
   display:flex;
   flex-direction:column;
   justify-content:center;
-  align-items:flex-start;
-  gap:8px;
-  min-height:300px;
+  align-items:center;
+  text-align:center;
+  gap:6px;
 }
 
 .flip-back{
   transform:rotateY(180deg);
-  min-height:300px;
+  overflow:auto;          /* Wichtig: Rückseite scrollt falls lang */
+  max-height:520px;       /* verhindert “springen” */
+}
 
-  /* Wichtig: Inhalt ruhig & untereinander */
+.service-back-content{
   display:flex;
-  flex-direction:column;
-  align-items:stretch;
+  flex-direction:column;  /* Text -> Bilder -> Preise */
   gap:14px;
-
-  /* Wenn viel Text/Bilder: scrollt nur die Rückseite */
-  max-height:520px;
-  overflow:auto;
 }
 
-/* Überschriften in der Rückseite */
-.subhead{
-  margin-top:4px;
-  font-size:15px;
+.service-back-content h4{
+  margin-top:8px;
 }
 
-/* ================= GALLERY ================= */
-.gallery{
-  display:flex;
-  gap:12px;
-  overflow-x:auto;
-  padding-bottom:4px;
-  scroll-snap-type:x mandatory;
+.close-btn{
+  align-self:flex-start;
+  margin-top:6px;
 }
 
-.gallery img{
-  width:240px;
-  height:180px;
-  object-fit:cover;
-  border-radius:14px;
+/* ================= MEDIA GRID (BILDER) ================= */
+.media-grid{
+  display:grid;
+  gap:14px;
+}
+
+.media-grid.two{
+  grid-template-columns:repeat(2, 1fr);
+}
+
+.shot{
+  margin:0;
   border:1px solid var(--line);
-  scroll-snap-align:start;
+  border-radius:14px;
+  overflow:hidden;
+  background:#fff;
 }
 
-/* ================= PRICELIST ================= */
+.shot img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  display:block;
+}
+
+.shot figcaption{
+  padding:10px 12px;
+  font-weight:800;
+  color:var(--muted);
+  border-top:1px solid var(--line);
+  font-size:.9rem;
+}
+
+/* ================= PRICE LIST ================= */
 .price-list{
   list-style:none;
-  padding-left:0;
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-.price-list li{
-  background:#f8fafc;
   border:1px solid var(--line);
-  border-radius:12px;
-  padding:10px 12px;
+  border-radius:14px;
+  overflow:hidden;
 }
 
-/* ================= FORMS ================= */
+.price-list li{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 12px;
+  border-bottom:1px solid var(--line);
+  background:#fff;
+}
+
+.price-list li:last-child{ border-bottom:none; }
+
+.price-list b{ white-space:nowrap; }
+
+.price-list .highlight{
+  background:rgba(14,165,233,.08);
+}
+
+/* ================= FORMS / CONTACT ================= */
 .form{
-  max-width:500px;
+  max-width:520px;
   margin:auto;
   display:flex;
   flex-direction:column;
   gap:12px;
-  background:transparent;
 }
 
 input,select,textarea{
@@ -302,84 +333,55 @@ input:focus,textarea:focus,select:focus{
   border-color:var(--brand);
 }
 
-textarea{resize:vertical;}
+textarea{ resize:vertical; }
 
-.form button{margin-top:10px;}
-
-.honeypot{
-  position:absolute;
-  left:-9999px;
-  top:auto;
-  width:1px;
-  height:1px;
-  overflow:hidden;
-}
-
-/* ================= CONTACT ================= */
 .contact-wrapper{
   display:grid;
-  grid-template-columns:1fr 1.3fr;
-  gap:18px;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
   margin-top:18px;
 }
+
 .contact-info{
   display:flex;
   flex-direction:column;
   gap:12px;
 }
-.info-card h3{margin-bottom:6px;}
+
+.info-card h3{ margin-bottom:6px; }
 
 /* ================= FOOTER ================= */
 .site-footer{
-  text-align:center;
-  padding:20px;
   border-top:1px solid var(--line);
-  margin-top:30px;
+  padding:20px 0;
   color:var(--muted);
-  background:#ffffff;
+  margin-top:30px;
 }
+
 .footer-inner{
   display:flex;
   justify-content:space-between;
   gap:12px;
-  flex-wrap:wrap;
   align-items:center;
+  flex-wrap:wrap;
 }
-.footer-nav{display:flex;gap:14px;}
 
-/* ================= TOAST ================= */
-.toast{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  background:white;
-  padding:12px 18px;
-  border-radius:12px;
-  box-shadow:var(--shadow);
-  opacity:0;
-  transition:.3s;
-  border:1px solid var(--line);
-  z-index:2000;
-}
-.toast.show{opacity:1;}
-.toast.error{border:1px solid #ef4444;}
-
-/* Button disabled */
-button:disabled{
-  opacity:.6;
-  cursor:not-allowed;
+.footer-nav{
+  display:flex;
+  gap:12px;
 }
 
 /* ================= RESPONSIVE ================= */
-@media (max-width: 1000px){
-  .feature-grid{grid-template-columns:repeat(2,1fr);}
-  .services-grid{grid-template-columns:1fr 1fr;}
-  .contact-wrapper{grid-template-columns:1fr;}
+@media (max-width: 980px){
+  .services-grid{ grid-template-columns: 1fr 1fr; }
+  .feature-grid{ grid-template-columns: 1fr 1fr; }
+  .contact-wrapper{ grid-template-columns:1fr; }
+  .hero-overlay h1{ font-size:30px; }
 }
 
 @media (max-width: 560px){
-  .services-grid{grid-template-columns:1fr;}
-  .hero-overlay h1{font-size:28px;}
-  .gallery img{width:220px;height:160px;}
+  .services-grid{ grid-template-columns: 1fr; }
+  .media-grid.two{ grid-template-columns:1fr; }
+  .shot img{ height:200px; }
 }
+
