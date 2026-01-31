@@ -1,466 +1,360 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Klarblick – Professionelle Fenster- & Gebäudereinigung</title>
-    <meta name="description"
-        content="Klarblick – Fenster- & Gebäudereinigung für Privat & Gewerbe. Termin buchen oder Nachricht senden." />
-    <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Klarblick – Professionelle Fenster- & Gebäudereinigung</title>
+  <meta name="description" content="Klarblick – Fenster- & Gebäudereinigung für Privat & Gewerbe. Termin buchen oder Nachricht senden." />
+  <link rel="stylesheet" href="styles.css" />
 
-    <!-- EmailJS -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", () => {
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-            // EmailJS initialisieren
-            emailjs.init("EkjsjWA3ij3hA-Deg");
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // EmailJS initialisieren
+      emailjs.init("EkjsjWA3ij3hA-Deg");
 
-            // Toast
-           function showToast(text, isError = false) {
-    const el = document.getElementById("toast");
-    if (!el) return;
-    el.textContent = text;
-    el.classList.toggle("error", isError);
-    el.classList.add("show");
-    setTimeout(() => el.classList.remove("show"), 2500);
-}
+      // Toast
+      function showToast(text, isError = false) {
+        const el = document.getElementById("toast");
+        if (!el) return;
+        el.textContent = text;
+        el.classList.toggle("error", isError);
+        el.classList.add("show");
+        setTimeout(() => el.classList.remove("show"), 2500);
+      }
 
-            // Form Handling
-            function handleForm(formId, serviceId, templateId) {
-    const form = document.getElementById(formId);
-    if (!form) return;
+      // Form Handling (EmailJS)
+      function handleForm(formId, serviceId, templateId) {
+        const form = document.getElementById(formId);
+        if (!form) return;
 
-    form.addEventListener("submit", async (event) => {
-        event.preventDefault();
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
 
-        // Honeypot Anti-Spam (siehe Punkt 3)
-        const honeypot = form.querySelector('input[name="website"]');
-        if (honeypot && honeypot.value) return;
+          // Honeypot Anti-Spam
+          const honeypot = form.querySelector('input[name="website"]');
+          if (honeypot && honeypot.value) return;
 
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalText = submitBtn ? submitBtn.textContent : "";
+          const submitBtn = form.querySelector('button[type="submit"]');
+          const originalText = submitBtn ? submitBtn.textContent : "";
 
-        if (submitBtn) {
+          if (submitBtn) {
             submitBtn.disabled = true;
             submitBtn.textContent = "Senden…";
-        }
+          }
 
-        try {
+          try {
             await emailjs.sendForm(serviceId, templateId, form);
             showToast("Danke! Ihre Nachricht wurde gesendet.");
             form.reset();
-        } catch (error) {
+          } catch (error) {
             console.log("EmailJS Fehler:", error);
             showToast("Ups – das Senden hat nicht geklappt. Bitte später erneut versuchen.", true);
-        } finally {
+          } finally {
             if (submitBtn) {
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
+              submitBtn.disabled = false;
+              submitBtn.textContent = originalText;
             }
-        }
-    });
-}
-
-
-            // Booking
-            handleForm("bookingForm", "service_ec65ghp", "template_170jtv3");
-            // Contact
-            handleForm("contactForm", "service_4j7i3fp", "template_24ws2c9");
-
-            // Footer Jahr
-            const yearEl = document.getElementById("year");
-            if (yearEl) yearEl.textContent = new Date().getFullYear();
-
+          }
         });
+      }
 
-        // Leistungen: Accordion
-        function toggleService(id) {
-            const el = document.getElementById(id);
-            if (!el) return;
+      // Booking & Contact aktivieren
+      handleForm("bookingForm", "service_ec65ghp", "template_170jtv3");
+      handleForm("contactForm", "service_4j7i3fp", "template_24ws2c9");
 
-            document.querySelectorAll(".service-detail").forEach((box) => {
-                if (box !== el) box.classList.remove("open");
-            });
+      // Footer Jahr
+      const yearEl = document.getElementById("year");
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-            el.classList.toggle("open");
-            el.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-    </script>
-
+      // Flip Cards: nur eine offen (Memory)
+      const flipCards = document.querySelectorAll(".flip-card");
+      flipCards.forEach((card) => {
+        card.addEventListener("click", () => {
+          flipCards.forEach((c) => {
+            if (c !== card) c.classList.remove("is-flipped");
+          });
+          card.classList.toggle("is-flipped");
+        });
+      });
+    });
+  </script>
 </head>
 
 <body>
-    <!-- Intro: Logo ploppt mittig, wischt in die Nav -->
-    <div class="intro" aria-hidden="true">
-        <div class="intro-logo">Klarblick</div>
-    </div>
-
-    <!-- Toast -->
-    <div id="toast" class="toast" role="status" aria-live="polite"></div>
-
-    <!-- Header / Navigation -->
-    <header class="site-header">
-        <nav class="top-nav">
-            <div class="nav-container">
-                <a class="logo" href="#top" aria-label="Klarblick Start">Klarblick</a>
-
-                <ul class="nav-menu">
-                    <li><a href="#about">Über uns</a></li>
-                    <li><a href="#values">Vorteile</a></li>
-                    <li><a href="#services">Leistungen</a></li>
-                    <li><a href="#contact">Kontakt</a></li>
-                </ul>
-
-                <a class="btn btn-primary" href="#booking">Termin buchen</a>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Hero -->
-    <section id="top" class="hero-section">
-        <div class="hero-background">
-            <img src="window-cleaning.jpg" alt="Fenster- und Gebäudereinigung" loading="eager" />
-            <div class="hero-overlay">
-                <p class="hero-badge">VOLLSTÄNDIG VERSICHERT</p>
-                <h1>Fenster- & Gebäudereinigung</h1>
-                <p class="hero-text">Sauber · Zuverlässig · Streifenfrei</p>
-
-                <div class="hero-actions">
-                    <a class="btn btn-primary" href="#booking">Termin buchen</a>
-                    <a class="btn btn-ghost" href="#services">Leistungen ansehen</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-   
-
-    <!-- Vorteile (kleine Kästchen wie inspir. Seite) -->
-    <section id="values" class="section section-alt">
-        <div class="container">
-            <p class="eyebrow">Warum Klarblick</p>
-            <h2>Qualität, die man sieht</h2>
-
-            <div class="feature-grid">
-                <div class="card feature">
-                    <div class="icon">✨</div>
-                    <h3>Streifenfrei</h3>
-                    <p class="muted">Klare Ergebnisse ohne Rückstände.</p>
-                </div>
-                <div class="card feature">
-                    <div class="icon">🛡️</div>
-                    <h3>Versichert</h3>
-                    <p class="muted">Sicherheit für Ihr Objekt.</p>
-                </div>
-                <div class="card feature">
-                    <div class="icon">⏱️</div>
-                    <h3>Zuverlässig</h3>
-                    <p class="muted">Pünktlich, sauber, professionell.</p>
-                </div>
-                <div class="card feature">
-                    <div class="icon">🌿</div>
-                    <h3>Schonend</h3>
-                    <p class="muted">Material- & oberflächenschonend.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Leistungen (klickbar, zeigt Details + Vorher/Nachher + Preisliste pro Leistung) -->
-    <section id="services" class="section">
-        <div class="container">
-            <p class="eyebrow">Unsere Leistungen</p>
-            <h2>Unsere Dienstleistungen</h2>
-
-           <div class="services-grid">
-
-  <!-- GRUND -->
-  <div class="flip-card" onclick="toggleFlip(this)">
-    <div class="flip-inner">
-      <div class="flip-front card">
-        <h3>Grundreinigung</h3>
-        <p class="muted">Klicken für Details</p>
-      </div>
-
-      <div class="flip-back card">
-        <h3>Grundreinigung</h3>
-        <p class="muted">
-          Gründliche Reinigung von Fenstern, Glasflächen, Rahmen und Fensterbänken.
-          Dabei entfernen wir Schmutz, Staub und alltägliche Ablagerungen zuverlässig und streifenfrei –
-          für klare Sicht und ein gepflegtes Erscheinungsbild.
-        </p>
-
-        <h4>Vorher / Nachher</h4>
-        <div class="gallery">
-          <img src="bilder/grund-vorher.jpg" alt="Grundreinigung vorher" loading="lazy">
-          <img src="bilder/grund-nachher.jpg" alt="Grundreinigung nachher" loading="lazy">
-        </div>
-
-        <h4>Preisliste (pro Fenster)</h4>
-        <ul class="price-list">
-          <li>Nur innen: <b>3 €</b></li>
-          <li>Nur außen: <b>4 €</b></li>
-          <li>Innen & außen: <b>6 €</b></li>
-          <li><b>Ab 10 Fenstern: 10% Rabatt</b></li>
-        </ul>
-      </div>
-    </div>
+  <!-- Intro -->
+  <div class="intro" aria-hidden="true">
+    <div class="intro-logo">Klarblick</div>
   </div>
 
-  <!-- SONDER -->
-  <div class="flip-card" onclick="toggleFlip(this)">
-    <div class="flip-inner">
-      <div class="flip-front card">
-        <h3>Sonderreinigung</h3>
-        <p class="muted">Klicken für Details</p>
-      </div>
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-      <div class="flip-back card">
-        <h3>Sonderreinigung</h3>
-        <p class="muted">
-          Für besondere Anforderungen wie nach einem Umzug, einer Renovierung oder bei starken Verschmutzungen.
-          Wir entfernen hartnäckige Rückstände wie Kalk, Bauschmutz, Fett oder andere intensive Verunreinigungen
-          gründlich und materialschonend.
-        </p>
+  <!-- Header / Navigation -->
+  <header class="site-header">
+    <nav class="top-nav">
+      <div class="nav-container">
+        <a class="logo" href="#top" aria-label="Klarblick Start">Klarblick</a>
 
-        <h4>Vorher / Nachher</h4>
-        <div class="gallery">
-          <img src="bilder/sonder-vorher.jpg" alt="Sonderreinigung vorher" loading="lazy">
-          <img src="bilder/sonder-nachher.jpg" alt="Sonderreinigung nachher" loading="lazy">
-        </div>
-
-        <h4>Preisliste (pro Fenster)</h4>
-        <ul class="price-list">
-          <li>Nur innen: <b>3 €</b></li>
-          <li>Nur außen: <b>4 €</b></li>
-          <li>Innen & außen: <b>6 €</b></li>
-          <li>Rahmen & Fensterbänke: <b>+ 2 €</b> pro Fenster</li>
+        <ul class="nav-menu">
+          <li><a href="#about">Über uns</a></li>
+          <li><a href="#values">Vorteile</a></li>
+          <li><a href="#services">Leistungen</a></li>
+          <li><a href="#contact">Kontakt</a></li>
         </ul>
+
+        <a class="btn btn-primary" href="#booking">Termin buchen</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section id="top" class="hero-section">
+    <div class="hero-background">
+      <img src="window-cleaning.jpg" alt="Fenster- und Gebäudereinigung" loading="eager" />
+      <div class="hero-overlay">
+        <p class="hero-badge">VOLLSTÄNDIG VERSICHERT</p>
+        <h1>Fenster- & Gebäudereinigung</h1>
+        <p class="hero-text">Sauber · Zuverlässig · Streifenfrei</p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#booking">Termin buchen</a>
+          <a class="btn btn-ghost" href="#services">Leistungen ansehen</a>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- GEWERBE -->
-  <div class="flip-card" onclick="toggleFlip(this)">
-    <div class="flip-inner">
-      <div class="flip-front card">
-        <h3>Gewerbliche Reinigung</h3>
-        <p class="muted">Klicken für Details</p>
-      </div>
+  <!-- Vorteile -->
+  <section id="values" class="section section-alt">
+    <div class="container">
+      <p class="eyebrow">Warum Klarblick</p>
+      <h2>Qualität, die man sieht</h2>
 
-      <div class="flip-back card">
-        <h3>Gewerbliche Reinigung</h3>
-        <p class="muted">
-          Professionelle Reinigung für Büros, Kanzleien, Praxen, Restaurants und Cafés.
-          Diskret, zuverlässig und flexibel – angepasst an Ihre Öffnungszeiten, damit der Betrieb
-          ungestört weiterlaufen kann.
-        </p>
-
-        <h4>Vorher / Nachher</h4>
-        <div class="gallery">
-          <img src="bilder/gewerbe-vorher.jpg" alt="Gewerbe vorher" loading="lazy">
-          <img src="bilder/gewerbe-nachher.jpg" alt="Gewerbe nachher" loading="lazy">
+      <div class="feature-grid">
+        <div class="card feature">
+          <div class="icon">✨</div>
+          <h3>Streifenfrei</h3>
+          <p class="muted">Klare Ergebnisse ohne Rückstände.</p>
         </div>
-
-        <h4>Preisliste (pro Fenster)</h4>
-        <ul class="price-list">
-          <li>Nur innen: <b>3 €</b></li>
-          <li>Nur außen: <b>4 €</b></li>
-          <li>Innen & außen: <b>6 €</b></li>
-          <li><b>Ab 10 Fenstern: 10% Rabatt</b></li>
-        </ul>
+        <div class="card feature">
+          <div class="icon">🛡️</div>
+          <h3>Versichert</h3>
+          <p class="muted">Sicherheit für Ihr Objekt.</p>
+        </div>
+        <div class="card feature">
+          <div class="icon">⏱️</div>
+          <h3>Zuverlässig</h3>
+          <p class="muted">Pünktlich, sauber, professionell.</p>
+        </div>
+        <div class="card feature">
+          <div class="icon">🌿</div>
+          <h3>Schonend</h3>
+          <p class="muted">Material- & oberflächenschonend.</p>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-</div>
+  <!-- Leistungen -->
+  <section id="services" class="section">
+    <div class="container">
+      <p class="eyebrow">Unsere Leistungen</p>
+      <h2>Unsere Dienstleistungen</h2>
 
+      <div class="services-grid">
 
-            <!-- GRUND -->
-            
-
-                <div class="service-body">
-                    <div>
-                        <h4>Vorher / Nachher</h4>
-                        <div class="gallery">
-                            <img src="bilder/grund-vorher.jpg" alt="Grundreinigung vorher" loading="lazy">
-                            <img src="bilder/grund-nachher.jpg" alt="Grundreinigung nachher" loading="lazy">
-                        </div>
-                    </div>
-
-                    <div class="pricebox card">
-                        <h4>Preisliste (pro Fenster)</h4>
-                        <ul>
-                            <li>Nur innen: <b>3 €</b></li>
-                            <li>Nur außen: <b>4 €</b></li>
-                            <li>Innen & außen: <b>6 €</b></li>
-                            <li><b>Ab 10 Fenstern: 10% Rabatt</b></li>
-                        </ul>
-                    </div>
-                </div>
+        <!-- GRUND -->
+        <div class="flip-card" role="button" tabindex="0" aria-label="Grundreinigung Details">
+          <div class="flip-inner">
+            <div class="flip-front card">
+              <h3>Grundreinigung</h3>
+              <p class="muted">Klicken für Details</p>
             </div>
 
-            <!-- SONDER -->
-            
+            <div class="flip-back card">
+              <h3>Grundreinigung</h3>
+              <p class="muted">
+                Gründliche Reinigung von Fenstern, Glasflächen, Rahmen und Fensterbänken.
+                Dabei entfernen wir Schmutz, Staub und alltägliche Ablagerungen zuverlässig und streifenfrei.
+              </p>
 
-                <div class="service-body">
-                    <div>
-                        <h4>Vorher / Nachher</h4>
-                        <div class="gallery">
-                            <img src="bilder/sonder-vorher.jpg" alt="Sonderreinigung vorher" loading="lazy">
-                            <img src="bilder/sonder-nachher.jpg" alt="Sonderreinigung nachher" loading="lazy">
-                        </div>
-                    </div>
+              <h4>Vorher / Nachher</h4>
+              <div class="gallery">
+                <img src="bilder/grund-vorher.jpg" alt="Dachfenster vor der Grundreinigung" loading="lazy">
+                <img src="bilder/grund-nachher.jpg" alt="Dachfenster nach der Grundreinigung" loading="lazy">
+              </div>
 
-                    <div class="pricebox card">
-                        <h4>Preisliste (pro Fenster)</h4>
-                        <ul>
-                            <li>Nur innen: <b>3 €</b></li>
-                            <li>Nur außen: <b>4 €</b></li>
-                            <li>Innen & außen: <b>6 €</b></li>
-                            <li><b>Ab 10 Fenstern: 10% Rabatt</b></li>
-                        </ul>
-                        <h4 class="mt">Zusatzleistungen</h4>
-                        <ul>
-                            <li>Rahmen & Fensterbänke: <b>+ 2 €</b> pro Fenster</li>
-                            <li>Balkone (Fenster & Geländer): <b>ab 8 €</b> pauschal (je nach Größe)</li>
-                            <li><b>Preis auf Anfrage</b></li>
-                        </ul>
-                    </div>
-                </div>
+              <h4>Preisliste (pro Fenster)</h4>
+              <ul class="price-list">
+                <li>Nur innen: <b>3 €</b></li>
+                <li>Nur außen: <b>4 €</b></li>
+                <li>Innen & außen: <b>6 €</b></li>
+                <li><b>Ab 10 Fenstern: 10% Rabatt</b></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- SONDER -->
+        <div class="flip-card" role="button" tabindex="0" aria-label="Sonderreinigung Details">
+          <div class="flip-inner">
+            <div class="flip-front card">
+              <h3>Sonderreinigung</h3>
+              <p class="muted">Klicken für Details</p>
             </div>
 
-            <!-- GEWERBE -->
-            
+            <div class="flip-back card">
+              <h3>Sonderreinigung</h3>
+              <p class="muted">
+                Für besondere Anforderungen wie nach Umzug, Renovierung oder bei starken Verschmutzungen.
+                Hartnäckige Rückstände entfernen wir materialschonend und gründlich.
+              </p>
 
-                <div class="service-body">
-                    <div>
-                        <h4>Vorher / Nachher</h4>
-                        <div class="gallery">
-                            <img src="bilder/gewerbe-vorher.jpg" alt="Gewerbe vorher" loading="lazy">
-                            <img src="bilder/gewerbe-nachher.jpg" alt="Gewerbe nachher" loading="lazy">
-                        </div>
-                    </div>
+              <h4>Vorher / Nachher</h4>
+              <div class="gallery">
+                <img src="bilder/sonder-vorher.jpg" alt="Glasdach vor der Sonderreinigung" loading="lazy">
+                <img src="bilder/sonder-nachher.jpg" alt="Glasdach nach der Sonderreinigung" loading="lazy">
+              </div>
 
-                    <div class="pricebox card">
-                        <h4>Preisliste (pro Fenster)</h4>
-                        <ul>
-                            <li>Nur innen: <b>3 €</b></li>
-                            <li>Nur außen: <b>4 €</b></li>
-                            <li>Innen & außen: <b>6 €</b></li>
-                            <li><b>Ab 10 Fenstern: 10% Rabatt</b></li>
-                        </ul>
+              <h4>Preisliste (pro Fenster)</h4>
+              <ul class="price-list">
+                <li>Nur innen: <b>3 €</b></li>
+                <li>Nur außen: <b>4 €</b></li>
+                <li>Innen & außen: <b>6 €</b></li>
+                <li>Rahmen & Fensterbänke: <b>+ 2 €</b> pro Fenster</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-                        <h4 class="mt">Zusatzleistungen</h4>
-                        <ul>
-                            <li>Rahmen & Fensterbänke: <b>+ 2 €</b> pro Fenster</li>
-                            <li>Balkone (Fenster & Geländer): <b>ab 8 €</b> pauschal (je nach Größe)</li>
-                        </ul>
-
-                        <h4 class="mt">Große Aufträge</h4>
-                        <ul>
-                            <li><b>Rabatt bei größeren Aufträgen</b></li>
-                            <li>Geschäftsräume & größere Objekte: <b>Preis auf Anfrage</b></li>
-                        </ul>
-                    </div>
-                </div>
+        <!-- GEWERBE -->
+        <div class="flip-card" role="button" tabindex="0" aria-label="Gewerbliche Reinigung Details">
+          <div class="flip-inner">
+            <div class="flip-front card">
+              <h3>Gewerbliche Reinigung</h3>
+              <p class="muted">Klicken für Details</p>
             </div>
 
-        </div>
-    </section>
+            <div class="flip-back card">
+              <h3>Gewerbliche Reinigung</h3>
+              <p class="muted">
+                Reinigung für Büros, Praxen, Restaurants & Cafés – diskret, zuverlässig und flexibel
+                nach Ihren Öffnungszeiten.
+              </p>
 
-    <!-- Booking -->
-    <section id="booking" class="section section-alt">
-        <div class="container">
-            <p class="eyebrow">Termin</p>
-            <h2>Termin buchen</h2>
+              <h4>Vorher / Nachher</h4>
+              <div class="gallery">
+                <img src="bilder/gewerbe-vorher.jpg" alt="Schaufenster vor der Gewerbereinigung" loading="lazy">
+                <img src="bilder/gewerbe-nachher.jpg" alt="Schaufenster nach der Gewerbereinigung" loading="lazy">
+              </div>
 
-            <form id="bookingForm" class="form">
-              <div class="honeypot" aria-hidden="true">
-  <label>Bitte leer lassen
-    <input type="text" name="website" autocomplete="off" tabindex="-1">
-  </label>
-</div>
-
-                <input type="text" name="name" placeholder="Ihr Name" required>
-                <input type="email" name="email" placeholder="E-Mail" required>
-                <input type="tel" name="phone" placeholder="Telefon" required>
-                <input type="datetime-local" name="date" required>
-
-                <select name="service" required>
-                    <option value="" selected disabled>Service wählen</option>
-                    <option value="Grundreinigung">Grundreinigung</option>
-                    <option value="Sonderreinigung">Sonderreinigung</option>
-                    <option value="Gewerbliche Reinigung">Gewerbliche Reinigung</option>
-                </select>
-
-                <textarea name="notes" rows="4" placeholder="Besonderheiten oder Anmerkungen"></textarea>
-                <button type="submit" class="btn btn-primary">Termin senden</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" class="section">
-        <div class="container">
-            <p class="eyebrow">Kontakt</p>
-            <h2>Sprechen Sie mit uns</h2>
-            <p class="muted center">Sie haben Fragen oder wünschen ein Angebot? Wir freuen uns auf Ihre Nachricht.</p>
-
-            <div class="contact-wrapper">
-                <div class="contact-info">
-                    <div class="card info-card">
-                        <h3>📞 Telefon</h3>
-                        <p><a href="tel:+4915120461265">+49 151 2046 1265</a></p>
-                    </div>
-
-                    <div class="card info-card">
-                        <h3>📧 E-Mail</h3>
-                        <p><a href="mailto:info.klarblickservice@gmail.com">info.klarblickservice@gmail.com</a></p>
-                    </div>
-
-                    <div class="card info-card">
-                        <h3>💬 WhatsApp</h3>
-                        <p><a href="https://wa.me/4915120461265" target="_blank" rel="noopener noreferrer">WhatsApp-Chat
-                                starten</a></p>
-                    </div>
-                </div>
-
-                <form id="contactForm" class="form">
-                  <div class="honeypot" aria-hidden="true">
-  <label>Bitte leer lassen
-    <input type="text" name="website" autocomplete="off" tabindex="-1">
-  </label>
-</div>
-
-                    <h3>Nachricht senden</h3>
-                    <input type="text" name="name" placeholder="Ihr Name" required>
-                    <input type="email" name="email" placeholder="Ihre E-Mail" required>
-                    <input type="tel" name="phone" placeholder="Telefon (optional)">
-                    <textarea name="message" rows="5" placeholder="Ihre Nachricht" required></textarea>
-
-                    <button type="submit" class="btn btn-primary">Nachricht senden</button>
-
-                    <p class="small muted">
-                        Mit dem Absenden akzeptieren Sie unsere <a href="datenschutz.html">Datenschutzerklärung</a>.
-                    </p>
-                </form>
+              <h4>Preisliste (pro Fenster)</h4>
+              <ul class="price-list">
+                <li>Nur innen: <b>3 €</b></li>
+                <li>Nur außen: <b>4 €</b></li>
+                <li>Innen & außen: <b>6 €</b></li>
+                <li><b>Rabatt bei größeren Aufträgen</b></li>
+                <li><b>Preis auf Anfrage</b></li>
+              </ul>
             </div>
+          </div>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="container footer-inner">
-            <small>© <span id="year"></span> Klarblick. Alle Rechte vorbehalten.</small>
-            <nav class="footer-nav" aria-label="Rechtliches">
-                <a href="impressum.html">Impressum</a>
-                <a href="datenschutz.html">Datenschutz</a>
-            </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking -->
+  <section id="booking" class="section section-alt">
+    <div class="container">
+      <p class="eyebrow">Termin</p>
+      <h2>Termin buchen</h2>
+
+      <form id="bookingForm" class="form">
+        <div class="honeypot" aria-hidden="true">
+          <label>Bitte leer lassen
+            <input type="text" name="website" autocomplete="off" tabindex="-1">
+          </label>
         </div>
-    </footer>
+
+        <input type="text" name="name" placeholder="Ihr Name" autocomplete="name" required>
+        <input type="email" name="email" placeholder="E-Mail" autocomplete="email" required>
+        <input type="tel" name="phone" placeholder="Telefon" autocomplete="tel" required>
+        <input type="datetime-local" name="date" required>
+
+        <select name="service" required>
+          <option value="" selected disabled>Service wählen</option>
+          <option value="Grundreinigung">Grundreinigung</option>
+          <option value="Sonderreinigung">Sonderreinigung</option>
+          <option value="Gewerbliche Reinigung">Gewerbliche Reinigung</option>
+        </select>
+
+        <textarea name="notes" rows="4" placeholder="Besonderheiten oder Anmerkungen"></textarea>
+        <button type="submit" class="btn btn-primary">Termin senden</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section">
+    <div class="container">
+      <p class="eyebrow">Kontakt</p>
+      <h2>Sprechen Sie mit uns</h2>
+      <p class="muted center">Sie haben Fragen oder wünschen ein Angebot? Wir freuen uns auf Ihre Nachricht.</p>
+
+      <div class="contact-wrapper">
+        <div class="contact-info">
+          <div class="card info-card">
+            <h3>📞 Telefon</h3>
+            <p><a href="tel:+4915120461265">+49 151 2046 1265</a></p>
+          </div>
+
+          <div class="card info-card">
+            <h3>📧 E-Mail</h3>
+            <p><a href="mailto:info.klarblickservice@gmail.com">info.klarblickservice@gmail.com</a></p>
+          </div>
+
+          <div class="card info-card">
+            <h3>💬 WhatsApp</h3>
+            <p><a href="https://wa.me/4915120461265" target="_blank" rel="noopener noreferrer">WhatsApp-Chat starten</a></p>
+          </div>
+        </div>
+
+        <form id="contactForm" class="form">
+          <div class="honeypot" aria-hidden="true">
+            <label>Bitte leer lassen
+              <input type="text" name="website" autocomplete="off" tabindex="-1">
+            </label>
+          </div>
+
+          <h3>Nachricht senden</h3>
+          <input type="text" name="name" placeholder="Ihr Name" autocomplete="name" required>
+          <input type="email" name="email" placeholder="Ihre E-Mail" autocomplete="email" required>
+          <input type="tel" name="phone" placeholder="Telefon (optional)" autocomplete="tel">
+          <textarea name="message" rows="5" placeholder="Ihre Nachricht" required></textarea>
+
+          <button type="submit" class="btn btn-primary">Nachricht senden</button>
+
+          <p class="small muted">
+            Mit dem Absenden akzeptieren Sie unsere <a href="datenschutz.html">Datenschutzerklärung</a>.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <small>© <span id="year"></span> Klarblick. Alle Rechte vorbehalten.</small>
+      <nav class="footer-nav" aria-label="Rechtliches">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </nav>
+    </div>
+  </footer>
 </body>
-
 </html>
