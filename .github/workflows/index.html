@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Klarblick – Professionelle Fenster- & Gebäudereinigung</title>
-  <meta name="description" content="Klarblick – Fenster- & Gebäudereinigung für Privat & Gewerbe. Termin buchen oder Nachricht senden." />
+  <meta name="description"
+    content="Klarblick – Fenster- & Gebäudereinigung für Privat & Gewerbe. Termin buchen oder Nachricht senden." />
   <link rel="stylesheet" href="styles.css" />
 
   <!-- EmailJS -->
@@ -12,6 +14,7 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
+
       // EmailJS initialisieren
       emailjs.init("EkjsjWA3ij3hA-Deg");
 
@@ -25,7 +28,7 @@
         setTimeout(() => el.classList.remove("show"), 2500);
       }
 
-      // Form Handling (EmailJS)
+      // Form Handling
       function handleForm(formId, serviceId, templateId) {
         const form = document.getElementById(formId);
         if (!form) return;
@@ -61,79 +64,27 @@
         });
       }
 
+      // Booking
       handleForm("bookingForm", "service_ec65ghp", "template_170jtv3");
+      // Contact
       handleForm("contactForm", "service_4j7i3fp", "template_24ws2c9");
 
       // Footer Jahr
       const yearEl = document.getElementById("year");
       if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-      // ===== Flip Cards (Memory + dynamische Höhe) =====
-      const cards = Array.from(document.querySelectorAll(".flip-card"));
-
-      function setCardHeight(card, side) {
-        // side: "front" | "back"
-        const inner = card.querySelector(".flip-inner");
-        const front = card.querySelector(".flip-front");
-        const back = card.querySelector(".flip-back");
-        if (!inner || !front || !back) return;
-
-        // Wir messen die Höhe der Seite, die sichtbar sein soll.
-        // Damit die Karte "nach unten wächst" statt zu scrollen.
-        const target = side === "back" ? back : front;
-
-        // Temporär sicherstellen, dass wir messen können:
-        // (back ist in 3D rotiert, aber die Box-Höhe ist messbar)
-        const h = target.scrollHeight;
-
-        inner.style.height = h + "px";
-      }
-
-      // Initialhöhe: Frontseite
-      cards.forEach(card => setCardHeight(card, "front"));
-
-      function closeOthers(current) {
-        cards.forEach(c => {
-          if (c !== current && c.classList.contains("is-flipped")) {
-            c.classList.remove("is-flipped");
-            setCardHeight(c, "front");
-          }
-        });
-      }
-
-      cards.forEach(card => {
-        card.addEventListener("click", () => {
-          const isOpen = card.classList.contains("is-flipped");
-          closeOthers(card);
-
-          if (isOpen) {
-            card.classList.remove("is-flipped");
-            setCardHeight(card, "front");
-          } else {
-            card.classList.add("is-flipped");
-            // nach dem Flip: Höhe auf Back setzen
-            // kleines Timeout, damit Layout sicher ist
-            setTimeout(() => setCardHeight(card, "back"), 0);
-          }
-        });
-      });
-
-      // Bei Resize neu berechnen (z.B. Handy drehen)
-      window.addEventListener("resize", () => {
-        cards.forEach(card => {
-          setCardHeight(card, card.classList.contains("is-flipped") ? "back" : "front");
-        });
-      });
     });
+
+    // Flip cards: Immer nur eine offen
+    function toggleFlip(card) {
+      document.querySelectorAll(".flip-card.is-flipped").forEach((el) => {
+        if (el !== card) el.classList.remove("is-flipped");
+      });
+      card.classList.toggle("is-flipped");
+    }
   </script>
 </head>
 
 <body>
-  <!-- Intro -->
-  <div class="intro" aria-hidden="true">
-    <div class="intro-logo">Klarblick</div>
-  </div>
-
   <!-- Toast -->
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
@@ -146,6 +97,7 @@
         <ul class="nav-menu">
           <li><a href="#values">Vorteile</a></li>
           <li><a href="#services">Leistungen</a></li>
+          <li><a href="#booking">Termin</a></li>
           <li><a href="#contact">Kontakt</a></li>
         </ul>
 
@@ -157,7 +109,7 @@
   <!-- Hero -->
   <section id="top" class="hero-section">
     <div class="hero-background">
-      <img src="window-cleaning.jpg" alt="Fenster- und Gebäudereinigung" loading="eager" />
+      <img src="bilder/hero.jpg" alt="Fenster- und Gebäudereinigung" loading="eager" />
       <div class="hero-overlay">
         <p class="hero-badge">VOLLSTÄNDIG VERSICHERT</p>
         <h1>Fenster- & Gebäudereinigung</h1>
@@ -211,7 +163,7 @@
       <div class="services-grid">
 
         <!-- GRUND -->
-        <div class="flip-card" role="button" tabindex="0" aria-label="Grundreinigung Details">
+        <div class="flip-card" onclick="toggleFlip(this)" role="button" tabindex="0" aria-label="Grundreinigung öffnen">
           <div class="flip-inner">
             <div class="flip-front card">
               <h3>Grundreinigung</h3>
@@ -220,19 +172,24 @@
 
             <div class="flip-back card">
               <h3>Grundreinigung</h3>
+
+              <!-- 1) TEXT -->
               <p class="muted">
                 Gründliche Reinigung von Fenstern, Glasflächen, Rahmen und Fensterbänken.
-                Dabei entfernen wir Schmutz, Staub und alltägliche Ablagerungen zuverlässig und streifenfrei –
+                Wir entfernen Schmutz, Staub und alltägliche Ablagerungen streifenfrei –
                 für klare Sicht und ein gepflegtes Erscheinungsbild.
               </p>
 
-              <h4>Vorher / Nachher</h4>
-              <div class="gallery gallery-stacked">
-                <img src="bilder/grund-vorher.jpg" alt="Dachfenster vor der Grundreinigung" loading="lazy">
-                <img src="bilder/grund-nachher.jpg" alt="Dachfenster nach der Grundreinigung" loading="lazy">
+              <!-- 2) BILDER -->
+              <h4 class="subhead">Vorher / Nachher</h4>
+              <div class="gallery">
+                <img src="bilder/grund-vorher.jpg" alt="Grundreinigung vorher" loading="lazy">
+                <img src="bilder/grund-nachher.jpg" alt="Grundreinigung nachher" loading="lazy">
+                <img src="bilder/grund-rahmen.jpg" alt="Grundreinigung Rahmen Detail" loading="lazy">
               </div>
 
-              <h4>Preisliste (pro Fenster)</h4>
+              <!-- 3) PREISE -->
+              <h4 class="subhead">Preisliste (pro Fenster)</h4>
               <ul class="price-list">
                 <li>Nur innen: <b>3 €</b></li>
                 <li>Nur außen: <b>4 €</b></li>
@@ -244,7 +201,7 @@
         </div>
 
         <!-- SONDER -->
-        <div class="flip-card" role="button" tabindex="0" aria-label="Sonderreinigung Details">
+        <div class="flip-card" onclick="toggleFlip(this)" role="button" tabindex="0" aria-label="Sonderreinigung öffnen">
           <div class="flip-inner">
             <div class="flip-front card">
               <h3>Sonderreinigung</h3>
@@ -253,18 +210,23 @@
 
             <div class="flip-back card">
               <h3>Sonderreinigung</h3>
+
+              <!-- 1) TEXT -->
               <p class="muted">
                 Für besondere Anforderungen wie nach einem Umzug, einer Renovierung oder bei starken Verschmutzungen.
-                Wir entfernen hartnäckige Rückstände gründlich und materialschonend.
+                Wir entfernen hartnäckige Rückstände wie Kalk, Bauschmutz, Fett oder andere Verunreinigungen
+                gründlich und materialschonend.
               </p>
 
-              <h4>Vorher / Nachher</h4>
-              <div class="gallery gallery-stacked">
-                <img src="bilder/sonder-vorher.jpg" alt="Glasdach vor der Sonderreinigung" loading="lazy">
-                <img src="bilder/sonder-nachher.jpg" alt="Glasdach nach der Sonderreinigung" loading="lazy">
+              <!-- 2) BILDER -->
+              <h4 class="subhead">Vorher / Nachher</h4>
+              <div class="gallery">
+                <img src="bilder/sonder-vorher.jpg" alt="Sonderreinigung vorher" loading="lazy">
+                <img src="bilder/sonder-nachher.jpg" alt="Sonderreinigung nachher" loading="lazy">
               </div>
 
-              <h4>Preisliste (pro Fenster)</h4>
+              <!-- 3) PREISE -->
+              <h4 class="subhead">Preisliste (pro Fenster)</h4>
               <ul class="price-list">
                 <li>Nur innen: <b>3 €</b></li>
                 <li>Nur außen: <b>4 €</b></li>
@@ -276,7 +238,7 @@
         </div>
 
         <!-- GEWERBE -->
-        <div class="flip-card" role="button" tabindex="0" aria-label="Gewerbliche Reinigung Details">
+        <div class="flip-card" onclick="toggleFlip(this)" role="button" tabindex="0" aria-label="Gewerbliche Reinigung öffnen">
           <div class="flip-inner">
             <div class="flip-front card">
               <h3>Gewerbliche Reinigung</h3>
@@ -285,24 +247,26 @@
 
             <div class="flip-back card">
               <h3>Gewerbliche Reinigung</h3>
+
+              <!-- 1) TEXT -->
               <p class="muted">
                 Professionelle Reinigung für Büros, Praxen, Restaurants und Cafés.
-                Diskret, zuverlässig und flexibel – angepasst an Ihre Öffnungszeiten.
+                Diskret, zuverlässig und flexibel – angepasst an Ihre Öffnungszeiten,
+                damit der Betrieb ungestört weiterlaufen kann.
               </p>
 
-              <h4>Vorher / Nachher</h4>
-              <div class="gallery gallery-stacked">
-                <img src="bilder/gewerbe-vorher.jpg" alt="Schaufenster vor der Gewerbereinigung" loading="lazy">
-                <img src="bilder/gewerbe-nachher.jpg" alt="Schaufenster nach der Gewerbereinigung" loading="lazy">
+              <!-- 2) BILDER (Standorte) -->
+              <h4 class="subhead">Beispiele & Standorte</h4>
+              <div class="gallery">
+                <img src="bilder/gewerbe-standort-1.jpg" alt="Gewerbliche Reinigung – Standort 1" loading="lazy">
+                <img src="bilder/gewerbe-standort-2.jpg" alt="Gewerbliche Reinigung – Standort 2" loading="lazy">
               </div>
 
-              <h4>Preisliste (pro Fenster)</h4>
+              <!-- 3) PREISE -->
+              <h4 class="subhead">Preise</h4>
               <ul class="price-list">
-                <li>Nur innen: <b>3 €</b></li>
-                <li>Nur außen: <b>4 €</b></li>
-                <li>Innen & außen: <b>6 €</b></li>
-                <li><b>Rabatt bei größeren Aufträgen</b></li>
-                <li><b>Preis auf Anfrage</b></li>
+                <li><b>Preis auf Anfrage</b> (je nach Größe, Glasfläche & Frequenz)</li>
+                <li>Regelmäßige Reinigung: <b>Rabatt möglich</b></li>
               </ul>
             </div>
           </div>
@@ -325,9 +289,9 @@
           </label>
         </div>
 
-        <input type="text" name="name" placeholder="Ihr Name" autocomplete="name" required>
-        <input type="email" name="email" placeholder="E-Mail" autocomplete="email" required>
-        <input type="tel" name="phone" placeholder="Telefon" autocomplete="tel" required>
+        <input type="text" name="name" placeholder="Ihr Name" required>
+        <input type="email" name="email" placeholder="E-Mail" required>
+        <input type="tel" name="phone" placeholder="Telefon" required>
         <input type="datetime-local" name="date" required>
 
         <select name="service" required>
@@ -376,9 +340,9 @@
           </div>
 
           <h3>Nachricht senden</h3>
-          <input type="text" name="name" placeholder="Ihr Name" autocomplete="name" required>
-          <input type="email" name="email" placeholder="Ihre E-Mail" autocomplete="email" required>
-          <input type="tel" name="phone" placeholder="Telefon (optional)" autocomplete="tel">
+          <input type="text" name="name" placeholder="Ihr Name" required>
+          <input type="email" name="email" placeholder="Ihre E-Mail" required>
+          <input type="tel" name="phone" placeholder="Telefon (optional)">
           <textarea name="message" rows="5" placeholder="Ihre Nachricht" required></textarea>
 
           <button type="submit" class="btn btn-primary">Nachricht senden</button>
@@ -402,4 +366,5 @@
     </div>
   </footer>
 </body>
+
 </html>
