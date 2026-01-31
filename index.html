@@ -29,7 +29,6 @@
   <!-- Hero -->
   <section id="top" class="hero-section">
     <div class="hero-background">
-      <!-- Passe den Dateinamen an, wenn du ihn anders nennst -->
       <img src="bilder/hero.jpg" alt="Fenster- und Gebäudereinigung" loading="eager" />
       <div class="hero-overlay">
         <p class="hero-badge">VOLLSTÄNDIG VERSICHERT</p>
@@ -84,7 +83,7 @@
       <div class="services-grid">
 
         <!-- GRUNDREINIGUNG -->
-        <article class="flip-card" tabindex="0">
+        <article class="flip-card" tabindex="0" aria-label="Grundreinigung Karte">
           <div class="flip-inner">
             <div class="flip-front card">
               <h3>Grundreinigung</h3>
@@ -100,11 +99,11 @@
                   für klare Sicht und ein gepflegtes Erscheinungsbild.
                 </p>
 
-                <h4>Vorher / Nachher</h4>
+                <h4>Beispiele</h4>
                 <div class="media-grid two">
                   <figure class="shot">
-                    <img src="bilder/grund-vorher.jpg" alt="Grundreinigung vorher" loading="lazy" />
-                    <figcaption>Vorher</figcaption>
+                    <img src="bilder/grund-rahmen.jpg" alt="Grundreinigung Rahmen" loading="lazy" />
+                    <figcaption>Rahmen</figcaption>
                   </figure>
                   <figure class="shot">
                     <img src="bilder/grund-nachher.jpg" alt="Grundreinigung nachher" loading="lazy" />
@@ -127,7 +126,7 @@
         </article>
 
         <!-- SONDERREINIGUNG -->
-        <article class="flip-card" tabindex="0">
+        <article class="flip-card" tabindex="0" aria-label="Sonderreinigung Karte">
           <div class="flip-inner">
             <div class="flip-front card">
               <h3>Sonderreinigung</h3>
@@ -169,7 +168,7 @@
         </article>
 
         <!-- GEWERBE -->
-        <article class="flip-card" tabindex="0">
+        <article class="flip-card" tabindex="0" aria-label="Gewerbliche Reinigung Karte">
           <div class="flip-inner">
             <div class="flip-front card">
               <h3>Gewerbliche Reinigung</h3>
@@ -197,7 +196,6 @@
                   </figure>
                 </div>
 
-                <h4>Hinweis</h4>
                 <p class="muted small">
                   Für Gewerbe erstellen wir Angebote individuell (Fläche, Erreichbarkeit, Intervalle).
                 </p>
@@ -212,7 +210,7 @@
     </div>
   </section>
 
-  <!-- Booking (Platzhalter) -->
+  <!-- Booking -->
   <section id="booking" class="section section-alt">
     <div class="container">
       <p class="eyebrow">Termin</p>
@@ -237,7 +235,7 @@
     </div>
   </section>
 
-  <!-- Kontakt (Platzhalter) -->
+  <!-- Kontakt -->
   <section id="contact" class="section">
     <div class="container">
       <p class="eyebrow">Kontakt</p>
@@ -288,10 +286,9 @@
     // Jahr im Footer
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Flip-Logik: Klick auf Karte = flip
+    // Flip-Logik
     document.querySelectorAll(".flip-card").forEach(card => {
       card.addEventListener("click", (e) => {
-        // Wenn auf "Schließen" geklickt, nur schließen
         if (e.target.classList.contains("close-btn")) {
           card.classList.remove("is-flipped");
           e.stopPropagation();
@@ -300,7 +297,6 @@
         card.classList.toggle("is-flipped");
       });
 
-      // Tastatur: Enter/Space flip
       card.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
@@ -314,3 +310,4 @@
   </script>
 </body>
 </html>
+
