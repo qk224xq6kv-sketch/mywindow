@@ -6,6 +6,47 @@
   <title>KlarBlick – Professionelle Fenster- & Gebäudereinigung</title>
   <meta name="description" content="Klarblick – Fenster- & Gebäudereinigung für Privat & Gewerbe. Termin buchen oder Nachricht senden." />
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // https://dashboard.emailjs.com/admin/account
+            emailjs.init({
+              publicKey: 'EkjsjWA3ij3hA-Deg',
+            });
+        })();
+    </script>
+
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", () => {
+      function handleForm(formId) {
+        const form = document.getElementById(formId);
+        if (!form) return;
+
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+
+          // 👉 Erfolgsmeldung IMMER anzeigen
+          alert("Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.");
+
+          // Formular sofort zurücksetzen (wirkt schnell & professionell)
+          form.reset();
+
+          // 👉 Mail im Hintergrund senden
+          emailjs.sendForm("service_ec65ghp", "template_170jtv3", form)
+            .catch((error) => {
+              // Fehler NUR für dich sichtbar
+              console.log("EmailJS Hintergrund-Fehler:", error);
+            });
+            });
+      }
+
+      // Beide Formulare anbinden
+      handleForm("bookingForm");
+      handleForm("contactForm");
+    });
+    </script>
 </head>
 
 <body>
