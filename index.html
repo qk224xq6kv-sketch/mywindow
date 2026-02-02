@@ -11,16 +11,19 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
         (function() {
+          const key = 'EkjsjWA3ij3hA-Deg';
+          console.log(`Init emailjs with key ${key}`);
+
             // https://dashboard.emailjs.com/admin/account
             emailjs.init({
-              publicKey: 'EkjsjWA3ij3hA-Deg',
+              publicKey: key,
             });
         })();
     </script>
 
   <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", () => {
-      function handleForm(formId) {
+      function handleForm(formId, serviceId, templateId) {
         const form = document.getElementById(formId);
         if (!form) return;
 
@@ -33,8 +36,10 @@
           // Formular sofort zurücksetzen (wirkt schnell & professionell)
           form.reset();
 
+          console.log(`Sending mail for form ${form} with service ${serviceId} and template ${templateId}.`);
+
           // 👉 Mail im Hintergrund senden
-          emailjs.sendForm("service_ec65ghp", "template_170jtv3", form)
+          emailjs.sendForm(serviceIds, templateId, form)
             .catch((error) => {
               // Fehler NUR für dich sichtbar
               console.log("EmailJS Hintergrund-Fehler:", error);
@@ -43,8 +48,8 @@
       }
 
       // Beide Formulare anbinden
-      handleForm("bookingForm");
-      handleForm("contactForm");
+      handleForm('bookingForm', 'service_ec65ghp', 'template_170jtv3');
+      handleForm('contactForm', 'service_ec65ghp', 'template_170jtv3');
     });
     </script>
 </head>
