@@ -90,12 +90,19 @@
 <body>
 <!-- Toast -->
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
+ 
+
 
   <!-- Header / Navigation -->
   <header class="site-header">
     <nav class="top-nav">
       <div class="nav-container">
-        <a class="logo" href="#top" aria-label="KlarBlick Start">KlarBlick</a>
+        <a class="logo" href="#top" aria-label="KlarBlick Start">
+  <span class="logo-mark" aria-hidden="true">KB</span>
+  <span class="logo-word">KlarBlick</span>
+</a>
+
+
 
         <ul class="nav-menu">
           <li><a href="#values">Vorteile</a></li>
@@ -200,9 +207,9 @@
 
       <h4>Preise (pro Fenster)</h4>
       <ul class="price-list">
-        <li><span>Nur innen</span><b>3 €</b></li>
-        <li><span>Nur außen</span><b>4 €</b></li>
-        <li><span>Innen & außen</span><b>6 €</b></li>
+        <li><span>Nur innen</span><b>4 €</b></li>
+        <li><span>Nur außen</span><b>5 €</b></li>
+        <li><span>Innen & außen</span><b>8 €</b></li>
         <li class="highlight"><span>Ab 10 Fenstern</span><b>10 % Rabatt</b></li>
       </ul>
     </div>
@@ -239,10 +246,10 @@
 
       <h4>Preise (pro Fenster)</h4>
       <ul class="price-list">
-        <li><span>Nur innen</span><b>3 €</b></li>
-        <li><span>Nur außen</span><b>4 €</b></li>
-        <li><span>Innen & außen</span><b>6 €</b></li>
-        <li><span>Rahmen & Fensterbänke</span><b>+ 2 €</b></li>
+        <li><span>Nur innen</span><b>4 €</b></li>
+        <li><span>Nur außen</span><b>5 €</b></li>
+        <li><span>Innen & außen</span><b>8 €</b></li>
+        <li><span>Rahmen & Fensterbänke</span><b>+ 3 €</b></li>
       </ul>
     </div>
   </article>
@@ -350,7 +357,22 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <small>© <span id="year"></span> Klarblick. Alle Rechte vorbehalten.</small>
+      <small>© <span id="year"></span> Klarblick. Alle Rechte vorbehalten.</small> <div class="footer-socials">
+      <a href="https://www.instagram.com/klarblickberlin" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5.8a4.2 4.2 0 1 0 0 8.4 4.2 4.2 0 0 0 0-8.4zm0 1.6a2.6 2.6 0 1 1 0 5.2 2.6 2.6 0 0 1 0-5.2zM17.5 6.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+        </svg>
+      </a>
+
+     <a class="tiktok-link"
+   href="tiktok://user?username=klarblick.berlin"
+   aria-label="TikTok">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M16.2 2c.6 2.9 2.6 4.9 5.5 5.2v3c-2.1 0-4.1-.7-5.7-2v7.3a6 6 0 1 1-5-5.9v3.2a2.8 2.8 0 1 0 2 2.7V2z"/>
+  </svg>
+</a>
+
+    </div>
       <nav class="footer-nav" aria-label="Rechtliches">
         <a href="impressum.html">Impressum</a>
         <a href="datenschutz.html">Datenschutz</a>
@@ -384,5 +406,16 @@
       });
     });
   </script>
+  <script>
+  document.querySelectorAll('.tiktok-link').forEach(link => {
+    link.addEventListener('click', function () {
+      const webUrl = "https://www.tiktok.com/@klarblick.berlin";
+      setTimeout(() => {
+        window.open(webUrl, "_blank", "noopener,noreferrer");
+      }, 500);
+    });
+  });
+</script>
+
 </body>
 </html>
