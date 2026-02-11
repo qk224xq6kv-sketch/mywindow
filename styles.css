@@ -6,7 +6,7 @@ flex-wrap: wrap;
   align-items:center;
 } 
 .logo img{
-  height: 65px;      /* Desktop */
+  height: 75px;      /* Desktop */
   width: auto;
   max-width: 220px;  /* verhindert, dass es zu breit wird */
   display: block;
